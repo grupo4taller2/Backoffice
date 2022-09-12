@@ -21,7 +21,7 @@ jobs:
     - name: npm install
       run: |
         npm install
-        npm test-jest
+        npm run test-jest
 
   build:
     runs-on: ubuntu-latest

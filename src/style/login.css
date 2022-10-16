@@ -1,0 +1,67 @@
+.Surface{
+    background-color: #fff;
+    position: fixed;
+    bottom: 25vh;
+    right: 20vw;
+    height: 50vh;
+    width: 30vw;
+    text-align: center;
+    align-items: center;
+    box-shadow: 2px 2px 2px 2px #898989;
+}
+
+.PhotoSurface{
+    position: fixed;
+    bottom: 25vh;
+    right: 50vw;
+    height: 50vh;
+    width: 30vw;
+}
+
+.LoginBtn{
+    position: absolute;
+
+    bottom: 5%;
+    right: 20%;
+
+    width: 60%;
+    height: 10%;
+}
+
+.UsernameInput{
+    position: absolute;
+
+    bottom: 60%;
+    right: 5%;
+    max-width: 90%;
+    height: 10%;
+}
+
+.UsernameLabel{
+    position: absolute;
+    bottom: 70%;
+    left: 5%;
+}
+
+.PasswordInput{
+    position: absolute;
+
+    bottom: 40%;
+    right: 5%;
+
+    max-width: 90%;
+    height: 10%;
+}
+
+.PasswordLabel{
+    position: absolute;
+
+    bottom: 50%;
+    left:5%
+}
+
+
+.HeadingFont{
+    font-size: 20;
+    font-weight: bold;
+}

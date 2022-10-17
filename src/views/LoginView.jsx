@@ -22,7 +22,7 @@ export default function LoginView(props){
                     <Input className="PasswordInput" id="AdminPasswordInput" name="Password" placeholder="Password" type="password" />
                 </FormGroup>
             </Form>
-            <Button className="LoginBtn" color="primary" outline>Login</Button>
+            <Button className="LoginBtn" color="primary">Login</Button>
         </Card>
     )
 }

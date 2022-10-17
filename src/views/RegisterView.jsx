@@ -4,6 +4,7 @@ import "../style/register.css"
 export default function Register(props){
     return (
         <Card className="Surface">
+            <h3 className="HeadingFont">Register new admin</h3>
             <Form>
                 <Row className="Row">
                     <FormGroup>

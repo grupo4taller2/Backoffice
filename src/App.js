@@ -6,7 +6,7 @@ import Register from './views/RegisterView';
 function App() {
   return (
     <div className="App flex-container">
-      <Register />
+      <LoginView />
     </div>
   );
 }

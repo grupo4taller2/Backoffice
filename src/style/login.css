@@ -1,4 +1,4 @@
-.Surface{
+.SurfaceLogin{
     background-color: #fff;
     position: fixed;
     bottom: 25vh;
@@ -10,7 +10,7 @@
     box-shadow: 2px 2px 2px 2px #898989;
 }
 
-.PhotoSurface{
+.PhotoSurfaceLogin{
     position: fixed;
     bottom: 25vh;
     right: 50vw;
@@ -28,7 +28,7 @@
     height: 10%;
 }
 
-.UsernameInput{
+.UsernameInputLogin{
     position: absolute;
 
     bottom: 60%;
@@ -37,13 +37,13 @@
     height: 10%;
 }
 
-.UsernameLabel{
+.UsernameLabelLogin{
     position: absolute;
     bottom: 70%;
     left: 5%;
 }
 
-.PasswordInput{
+.PasswordInputLogin{
     position: absolute;
 
     bottom: 40%;
@@ -53,7 +53,7 @@
     height: 10%;
 }
 
-.PasswordLabel{
+.PasswordLabelLogin{
     position: absolute;
 
     bottom: 50%;
@@ -61,7 +61,7 @@
 }
 
 
-.HeadingFont{
+.HeadingFontLogin{
     font-size: 20;
     font-weight: bold;
 }

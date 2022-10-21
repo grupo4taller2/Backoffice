@@ -1,28 +1,47 @@
 import "../style/login.css"
-import { Button, Card, Col, Form, FormGroup, Input, Label } from "reactstrap"
+import { Card, Form, FormGroup, Input, Label } from "reactstrap"
+import StatusButton from "../components/StatusButton";
+import React from "react";
+import LabeledInput from "../components/LabeledInput";
 
 const logo = require("../images/logoWithName.png");
 
 export default function LoginView(props){
 
+    const [loading, setLoading] = React.useState(false);
+
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    
+    const tryLogin = () => {
+        setLoading(!loading); //TODO: cambiarlo para que funcione como debe
+
+        console.log(username);
+        console.log(password);
+
+        /*
+            Aca hace checkeos sencillos: 
+
+            1. Si no escribio nada, avisale que escriba algo.
+            2. Si escribio algo pero esta mal, avisa que son credenciales invalidas
+        */
+    }
 
     return (
-        <Card className="Surface">
-            <h3 className="HeadingFont">Admin Login</h3>
-            <img className="PhotoSurface" src={logo} />
+        <Card className="SurfaceLogin">
+            <h3 className="HeadingFontLogin">Admin Login</h3>
+            <img className="PhotoSurfaceLogin" src={logo} />
             <Form>
                 <FormGroup>
-                    <Label className="UsernameLabel" for="adminNameInput">
-                        Username
-                    </Label>
-                    <Input className="UsernameInput" id="adminNameInput" name="username" placeholder="username" type="text" />
-                    <Label className="PasswordLabel" for="AdminPasswordInput">
-                        Password
-                    </Label>
-                    <Input className="PasswordInput" id="AdminPasswordInput" name="Password" placeholder="Password" type="password" />
+                    <LabeledInput labelClass="UsernameLabelLogin" inputClass="UsernameInputLogin" id="adminNameInput"
+                                  name="username" type="text" value={username} onChange={setUsername}/>
+                                  
+                    <LabeledInput labelClass="PasswordLabelLogin" inputClass="PasswordInputLogin" id="AdminPasswordInput"
+                                    name="password" type="password" value={password} onChange={setPassword}/>
                 </FormGroup>
             </Form>
-            <Button className="LoginBtn" color="primary">Login</Button>
+            <StatusButton className="LoginBtn" color="primary" text="Login" loading={loading} 
+                            loadingText="Login in" onPress={tryLogin}/>
         </Card>
     )
 }

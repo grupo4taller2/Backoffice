@@ -65,3 +65,12 @@
     font-size: 20;
     font-weight: bold;
 }
+
+.ErrorMessageLogin{
+    position: absolute;
+
+    font-size: 15;
+    font-weight: bold;
+    color: red;
+    bottom: 20%;
+}

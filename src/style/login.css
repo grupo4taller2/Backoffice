@@ -1,0 +1,76 @@
+.SurfaceLogin{
+    background-color: #fff;
+    position: fixed;
+    bottom: 25vh;
+    right: 20vw;
+    height: 50vh;
+    width: 30vw;
+    text-align: center;
+    align-items: center;
+    box-shadow: 2px 2px 2px 2px #898989;
+}
+
+.PhotoSurfaceLogin{
+    position: fixed;
+    bottom: 25vh;
+    right: 50vw;
+    height: 50vh;
+    width: 30vw;
+}
+
+.LoginBtn{
+    position: absolute;
+
+    bottom: 5%;
+    right: 20%;
+
+    width: 60%;
+    height: 10%;
+}
+
+.UsernameInputLogin{
+    position: absolute;
+
+    bottom: 60%;
+    right: 5%;
+    max-width: 90%;
+    height: 10%;
+}
+
+.UsernameLabelLogin{
+    position: absolute;
+    bottom: 70%;
+    left: 5%;
+}
+
+.PasswordInputLogin{
+    position: absolute;
+
+    bottom: 40%;
+    right: 5%;
+
+    max-width: 90%;
+    height: 10%;
+}
+
+.PasswordLabelLogin{
+    position: absolute;
+
+    bottom: 50%;
+    left:5%
+}
+
+
+.HeadingFontLogin{
+    font-size: 20;
+    font-weight: bold;
+}
+
+.ErrorMessageLogin{
+    position: absolute;
+
+    font-size: 15;
+    font-weight: bold;
+    color: red;
+    bottom: 20%;
+}

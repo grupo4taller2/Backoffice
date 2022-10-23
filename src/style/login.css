@@ -1,8 +1,8 @@
 .SurfaceLogin{
     background-color: #fff;
     position: fixed;
-    bottom: 25vh;
-    right: 20vw;
+    bottom: 20vh;
+    right: 35vw;
     height: 50vh;
     width: 30vw;
     text-align: center;
@@ -12,10 +12,10 @@
 
 .PhotoSurfaceLogin{
     position: fixed;
-    bottom: 25vh;
-    right: 50vw;
-    height: 50vh;
-    width: 30vw;
+    bottom: 70vh;
+    right: 40vw;
+    height: 30vh;
+    width: 20vw;
 }
 
 .LoginBtn{

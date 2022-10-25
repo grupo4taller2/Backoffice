@@ -1,11 +1,12 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginView from './views/LoginView';
-import Register from './views/RegisterView';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { completeSignIn, initialState, UserContext} from './config/ctx';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import Search from './views/SearchView';
+import { getAuth, signOut } from 'firebase/auth';
 
 function App() {
 
@@ -18,6 +19,10 @@ function App() {
       signIn: async (response) => {
         completeSignIn(response, userState, setState);
         return true;
+      },
+      signOut: async () => {
+        await signOut(getAuth());
+        setState(initialState())
       }
     })
   });
@@ -29,12 +34,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LoginView />} />
-          <Route path='/registerUser' element={<Register />} />
+          <Route path='/search' element={<Search />} />
         </Routes>
       </BrowserRouter>
       </UserContext.Provider>
     </div>
   );
 }
+
+
 
 export default App;

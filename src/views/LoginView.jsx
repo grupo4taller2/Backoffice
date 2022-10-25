@@ -50,7 +50,7 @@ export default function LoginView(props){
             const response = await login(username, password);
             setLoading(false);
             signIn(response);
-            navigate('/registerUser')
+            navigate('/search')
         }catch (e){
             console.log(e);
             setError(INVALIDLOGIN)

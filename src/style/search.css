@@ -28,7 +28,7 @@
 
 .SearchButton{
     position: absolute;
-
+    flex-direction: column;
     font-weight: bold;
     font-size: 20px;
 

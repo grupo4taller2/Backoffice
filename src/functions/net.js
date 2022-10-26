@@ -18,3 +18,37 @@ export async function login(mail, password){
    
    return credentials;
 }
+
+export async function registerAdmin(newAdmin){
+    
+    try{
+        await axios.post("https://g4-fiuber.herokuapp.com/api/v1/admins", {username: newAdmin});
+        
+    }catch (error){
+        console.log(error)
+    }
+
+
+}
+
+
+
+export async function search(searchString){
+
+    const users = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/users/search", {params: {like: searchString}})).data
+
+    const result = users.map(async value => {
+        try{
+            await axios.get("https://g4-fiuber.herokuapp.com/api/v1/admins/" + value.username)
+            value.admin = true;
+        }catch (error){
+            console.log(error);
+            value.admin = false;
+        }
+
+        return value;
+    });
+
+    return await Promise.all(result)
+
+}

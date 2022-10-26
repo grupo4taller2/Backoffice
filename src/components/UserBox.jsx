@@ -1,11 +1,28 @@
 import React from "react";
 import { Button, Card, Modal, ModalFooter, ModalHeader } from "reactstrap";
+import { registerAdmin } from "../functions/net";
 import "../style/search.css"
+import StatusButton from "./StatusButton";
 
 export default function UserBox(props){
     const [register, setRegister] = React.useState(false);
 
+    const [loading, setLoading] = React.useState(false);
+
     const toggle = props.admin ? () => {} : () => {setRegister(!register)};
+
+    const as_admin = props.admin ? () => {} : async () => {
+        console.log("called");
+        setLoading(true);
+        try{
+            await registerAdmin(props.username);
+            await props.update();
+        }catch{
+            //Set an error
+        }
+
+        setLoading(false);
+    };
 
     return (
                     <Card className="FoundUserBox">
@@ -14,9 +31,7 @@ export default function UserBox(props){
                         <Modal isOpen={register} toggle={toggle}>
                             <ModalHeader>{"Register " + props.username + " as admin ?"}</ModalHeader>
                             <ModalFooter>
-                                <Button color="primary" onClick={toggle}>
-                                    Yes
-                                </Button>
+                                <StatusButton onPress={as_admin} color="primary" loading={loading} loadingText="" text="yes" />
                                 <Button color="secondary" onClick={toggle}>
                                     Cancel
                                 </Button>

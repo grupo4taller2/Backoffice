@@ -1,6 +1,7 @@
 import React from "react"
 import { Button, Spinner } from "reactstrap"
 
+
 export default function StatusButton(props){
     
     
@@ -12,6 +13,6 @@ export default function StatusButton(props){
                          <span>
                             {' ' + props.loadingText}
                         </span>
-                        </React.Fragment>) : props.text}
+                        </React.Fragment>) : <p>{props.text}</p>}
         </Button>)
 }

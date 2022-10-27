@@ -22,6 +22,7 @@ export default function UserBox(props){
         }
 
         setLoading(false);
+        toggle();
     };
 
     return (

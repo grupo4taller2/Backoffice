@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, Modal } from "reactstrap";
+import { Badge, Button, Card, CardBody, CardHeader, CloseButton, Modal } from "reactstrap";
 import "../style/search.css";
 import "../style/userCard.css";
+import InfoTable from "./InfoTable";
 
 export default function InfoUserBox(props){
 
@@ -11,33 +12,70 @@ export default function InfoUserBox(props){
         setShow(!show);
     }
 
-    const keys = Object.keys(props.data);
-    
-
     const userType = props.data.rider_information.wallet ? "Rider" : "Driver";
 
     const userInfo = userType === "Rider" ? props.data.rider_information : props.data.driver_information;
 
+    let headers = Object.keys(userInfo).filter(value => value !== "car");
+    const info = headers.map(value => userInfo[value]);
+
+    const driverHeaders = userType === "Driver" && Object.keys(userInfo.car);
+    const carInfo = driverHeaders && driverHeaders.map(value => userInfo.car[value]);
+
+    const mainInfoHeaders = ["User type", "Username", "Name", "email"];
+    const mainInfo = [userType, props.data.username, props.data.first_name + " " + props.data.last_name, props.data.email];
+
     return (<>
                 <Button onClick={toggle}  className="InfoTag" color="primary">Info</Button>
                 <Modal className="UserCardSurface" isOpen={show} toggle={toggle}>
-                    <p>Email: {props.data.email}</p>
-                    <p>Name: {props.data.first_name + props.data.last_name}</p>
-                    <p>User information: 
-                        <p>Wallet address: {userInfo.wallet}</p>
-                        <p>Phone number: {userInfo.phone_number}</p>
-                        <p>Preferred address: {userInfo.preferred_location_name}</p>
-                    </p>
-                    {userType === "Driver" && <p>Driver information: 
-                        <p>Car plate: {userInfo.car.plate}</p>
-                        <p>Car year: {userInfo.car.year_of_production}</p>
-                        <p>Car model: {userInfo.car.model}</p>
-                        <p>Car manufacturer: {userInfo.car.manufacturer}</p>
-                        <p>Car color: {userInfo.car.color}</p>
-                        </p>}
-                    <Button color="secondary" onClick={toggle}>Close</Button>
+                    <div className="CloseButtonDiv">
+                        <CloseButton onClick={toggle}/>
+                        <Card outline className="UserTittle">
+                            <InfoTable headers={mainInfoHeaders} info={mainInfo} />
+                        </Card>
+                    </div>
+                        <div className="UserInfoDiv">
+                    <Card className="CardShadow">
+                        <CardHeader>
+                            User information    
+                        </CardHeader>
+                        <CardBody>
+                            <InfoTable headers={pretifyHeaders(headers)} info={info}></InfoTable>
+                        </CardBody>
+                    </Card>
+                    {driverHeaders &&
+                            <Card className="CardShadow">
+                            <CardHeader>
+                                Car information
+                            </CardHeader>
+                            <CardBody>
+                                <InfoTable headers={pretifyHeaders(driverHeaders)} info={carInfo} />
+                            </CardBody>
+                            </Card>
+                        }
+                        </div>
                     
                 </Modal>
             </>)
 
 };
+
+
+function pretifyHeaders(headers){
+
+    return (
+        headers.map(value => {
+            switch (value){
+                case "phone_number": return "Phone Number"; 
+                case "wallet": return "Wallet";
+                case "preferred_location_name": return "Prefered Location";
+                case "plate": return "Plate";
+                case "year_of_production": return "Car Year";
+                case "model": return "Car Model";
+                case "manufacturer": return "Car Manufacturer";
+                case "color": return "Car Color";
+                default: return "Unknown"
+            }
+        })
+    )
+}

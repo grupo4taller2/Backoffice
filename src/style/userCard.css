@@ -1,9 +1,48 @@
 .UserCardSurface{
-    position: fixed;
+    display: flex;
+    
+    min-width: 60%;
 
-    left: 10vw;
-    bottom: 0vh;
+    align-items: center;
+    justify-content: center;
 
-    min-width: 80vw;
-    min-height: 80vh;
+    flex-direction: column;
+    
+}
+
+.CloseButtonDiv{
+    display: flex;
+
+    margin: 2%;
+
+    flex-direction: row;
+
+    height: 100%;
+    width: 100%;
+}
+
+.UserTittle{
+    display: flex;
+
+    margin-left: 12.5%;
+}
+
+.UserInfoDiv{
+    display: flex;
+
+    min-width: 90%;
+    flex-direction: column;
+}
+
+.CardShadow{
+
+    display: flex;
+
+    margin: 1%;
+    padding: 2;
+    border-color: black;
+
+    border-radius: 50;
+    box-shadow: 2px 2px 2px 2px #898989;
+
 }

@@ -14,6 +14,8 @@
 
 .MenuItem{
 
-    align-self: flex-start;
-    justify-self: flex-start;
+    position: absolute;
+
+    left: 2%;
+    bottom: 2%;
 }

@@ -47,7 +47,7 @@ export default function Search(props){
                 <Card className="SearchResultBox">
                     {users.map(user => {
                         console.log(user);
-                        return <UserBox update={doSearch} admin={user.admin} username={user.username} />
+                        return <UserBox data={user} update={doSearch} admin={user.admin} username={user.username} />
                     })}
                 </Card>
             </Card>

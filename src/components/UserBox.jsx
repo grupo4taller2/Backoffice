@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Card, Modal, ModalFooter, ModalHeader } from "reactstrap";
 import { registerAdmin } from "../functions/net";
 import "../style/search.css"
+import InfoUserBox from "./InfoUserBox";
 import StatusButton from "./StatusButton";
 
 export default function UserBox(props){
@@ -27,12 +28,12 @@ export default function UserBox(props){
 
     return (
                     <Card className="FoundUserBox">
-                        <Button className="InfoTag" color="primary">Info</Button>
+                        <InfoUserBox data={props.data}/>
                         <Card  onClick={toggle} color={props.admin ? "success": "warning"} className="UserTypeTag">{props.admin ? "Admin" : "Regular user"}</Card>
                         <Modal isOpen={register} toggle={toggle}>
                             <ModalHeader>{"Register " + props.username + " as admin ?"}</ModalHeader>
                             <ModalFooter>
-                                <StatusButton onPress={as_admin} color="primary" loading={loading} loadingText="" text="yes" />
+                                <StatusButton className="AdminRegBtn" onPress={as_admin} color="primary" loading={loading} loadingText="" text="yes" />
                                 <Button color="secondary" onClick={toggle}>
                                     Cancel
                                 </Button>

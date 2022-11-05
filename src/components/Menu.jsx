@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Card } from "reactstrap";
+import { Button, Card, Nav, NavLink } from "reactstrap";
 import { useUserContext } from "../config/ctx";
 import "../style/menu.css"
 
@@ -15,7 +15,9 @@ export default function Menu(props){
 
     return (
         <Card className="MenuSurface">
-            <Button className="MenuItem" onClick={exit}>Logout</Button>
+            <Nav vertical>
+                <NavLink className="MenuItem" href="/" onClick={exit}>Logout</NavLink>
+            </Nav>
         </Card>
     );
 }

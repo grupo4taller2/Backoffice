@@ -11,7 +11,9 @@ export async function login(mail, password){
    const auth = getAuth();
    const credentials = await signInWithEmailAndPassword(auth, mail, password).catch(reason => console.log(reason));
    
-   const username = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/admins/" + mail)).data
+   const token = getHeaderFromCredential(credentials);
+   
+   const username = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/admins/" + mail), token).data
    
    //const result = await axios.post('https://g4-fiuber.herokuapp.com/api/v1/admins', undefined, 
    //{headers: {"access-control-allow-origin": "*", Authorization: `bearer ${await credentials.user.getIdToken()}`}, data: {username: "Juancitoperez"}});
@@ -51,4 +53,16 @@ export async function search(searchString){
 
     return await Promise.all(result)
 
+}
+
+function getHeader(context){
+    return context.userState.user ? getToken(context.userState.user.stsTokenManager.accessToken) : null;
+}
+
+function getHeaderFromCredential(credential){
+    return credential ? getToken(credential.user.stsTokenManager.accessToken) : null;
+}
+
+function getToken(accessToken){
+    return {headers: {Authorization: `bearer ${accessToken}`}}
 }

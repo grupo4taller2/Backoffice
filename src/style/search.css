@@ -32,6 +32,8 @@
     font-weight: bold;
     font-size: 20px;
 
+    align-items: center;
+    justify-items: center;
    
     bottom: 5%;
     right: 0%;
@@ -90,11 +92,13 @@
     font-weight: bold;
     
 
-    right: 40%;
-    bottom: 10%;
+    right: 2%;
+    bottom: 55%;
 
     width: 20%;
-    height: 80%;
+    height: 30%;
+
+    font-size: 16px;
 
     align-items: center;
     justify-content: center;
@@ -102,8 +106,10 @@
 }
 
 .InfoTag{
+    position: absolute;
+    bottom: 5%;
     width: 20%;
-    height: 80%;
+    height: 30%;
 
     font-size: larger;
     font-weight: bold;
@@ -114,3 +120,13 @@
     margin: 2%;
 }
 
+.AdminRegBtn{
+    position: absolute;
+    bottom: 8%;
+    right: 18%;
+    width: 10%;
+    height: 29%;
+
+    justify-items: center;
+    align-items: center;
+}

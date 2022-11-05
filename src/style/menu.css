@@ -14,13 +14,6 @@
 
 .MenuItem{
 
-    height: 20%;
-    width: 80%;
-
-    font-size: 20;
-    font-weight: bold;
-
-    align-items: center;
-    justify-items: center;
-    box-shadow: 2px 2px 2px 2px #898989;
+    align-self: flex-start;
+    justify-self: flex-start;
 }

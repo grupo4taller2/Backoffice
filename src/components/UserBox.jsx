@@ -29,7 +29,8 @@ export default function UserBox(props){
     return (
                     <Card className="FoundUserBox">
                         <InfoUserBox data={props.data}/>
-                        <Card  onClick={toggle} color={props.admin ? "success": "warning"} className="UserTypeTag">{props.admin ? "Admin" : "Regular user"}</Card>
+                        {!props.admin && <Button className="AdminBtn" color="primary" outline onClick={toggle}>Make admin</Button>}
+                        <Card  outline color="light" className={["UserTypeTag", props.admin ? "AdminBackground" : "RegularBackground"]}>{props.admin ? "Admin" : "Regular user"}</Card>
                         <Modal isOpen={register} toggle={toggle}>
                             <ModalHeader>{"Register " + props.username + " as admin ?"}</ModalHeader>
                             <ModalFooter>

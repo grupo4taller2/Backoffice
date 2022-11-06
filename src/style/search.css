@@ -26,6 +26,23 @@
     width: 80%;
 }
 
+.AdminBtn{
+    position: absolute;
+    height: 30%;
+    width: 15%;
+
+    left: 37.5%;
+    bottom: 35%;
+}
+
+.AdminBackground{
+    background-color: tan;
+}
+
+.RegularBackground{
+    background-color: darkgray;
+}
+
 .SearchButton{
     position: absolute;
     flex-direction: column;

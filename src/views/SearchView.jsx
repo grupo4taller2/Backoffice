@@ -4,6 +4,7 @@ import LabeledInput from "../components/LabeledInput";
 import Menu from "../components/Menu";
 import StatusButton from "../components/StatusButton";
 import UserBox from "../components/UserBox";
+import { useUserContext } from "../config/ctx";
 import { search } from "../functions/net";
 import "../style/search.css"
 
@@ -14,9 +15,11 @@ export default function Search(props){
 
     const [users, setUsers] = React.useState([]);
 
+    const context = useUserContext();
+
     const doSearch = async () => {
         try{
-            const result = await search(searchString);
+            const result = await search(searchString, context);
             setUsers(result);    
         }catch{
             setUsers([]);

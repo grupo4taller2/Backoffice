@@ -13,18 +13,17 @@ export async function login(mail, password){
    
    const token = getHeaderFromCredential(credentials);
    
-   const username = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/admins/" + mail), token).data
+   const username = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/admins/" + mail, token)).data
    
-   //const result = await axios.post('https://g4-fiuber.herokuapp.com/api/v1/admins', undefined, 
-   //{headers: {"access-control-allow-origin": "*", Authorization: `bearer ${await credentials.user.getIdToken()}`}, data: {username: "Juancitoperez"}});
-   
-   return credentials;
+   return {credential: credentials, userInfo: username};
 }
 
-export async function registerAdmin(newAdmin){
+export async function registerAdmin(newAdmin, context){
     
+    const token = getHeader(context);
+
     try{
-        await axios.post("https://g4-fiuber.herokuapp.com/api/v1/admins", {username: newAdmin});
+        await axios.post("https://g4-fiuber.herokuapp.com/api/v1/admins", {username: newAdmin}, token);
         
     }catch (error){
         console.log(error)
@@ -34,14 +33,15 @@ export async function registerAdmin(newAdmin){
 }
 
 
+export async function search(searchString, context){
 
-export async function search(searchString){
-
-    const users = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/users/search", {params: {like: searchString}})).data
+    const token = getHeader(context);
+    
+    const users = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/users/search", {headers: token.headers, params: {like: searchString}})).data
 
     const result = users.map(async value => {
         try{
-            await axios.get("https://g4-fiuber.herokuapp.com/api/v1/admins/" + value.username)
+            await axios.get("https://g4-fiuber.herokuapp.com/api/v1/admins/" + value.username, token)
             value.admin = true;
         }catch (error){
             console.log(error);
@@ -64,5 +64,6 @@ function getHeaderFromCredential(credential){
 }
 
 function getToken(accessToken){
-    return {headers: {Authorization: `bearer ${accessToken}`}}
+    return {headers: {'Authorization': `bearer ${accessToken}`}}
+    
 }

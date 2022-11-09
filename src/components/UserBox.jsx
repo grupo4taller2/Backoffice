@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Card, Modal, ModalFooter, ModalHeader } from "reactstrap";
+import { useUserContext } from "../config/ctx";
 import { registerAdmin } from "../functions/net";
 import "../style/search.css"
 import InfoUserBox from "./InfoUserBox";
@@ -12,11 +13,13 @@ export default function UserBox(props){
 
     const toggle = props.admin ? () => {} : () => {setRegister(!register)};
 
+    const context = useUserContext();
+
     const as_admin = props.admin ? () => {} : async () => {
         console.log("called");
         setLoading(true);
         try{
-            await registerAdmin(props.username);
+            await registerAdmin(props.username, context);
             await props.update();
         }catch{
             //Set an error

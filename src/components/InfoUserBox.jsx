@@ -11,7 +11,7 @@ export default function InfoUserBox(props){
     const toggle = () => {
         setShow(!show);
     }
-
+    console.log(props.data);
     const userType = props.data.rider_information.wallet ? "Rider" : "Driver";
 
     const userInfo = userType === "Rider" ? props.data.rider_information : props.data.driver_information;

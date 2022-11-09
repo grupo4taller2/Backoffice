@@ -1,5 +1,5 @@
 import "../style/login.css"
-import { Card, Form, FormGroup, Input, Label } from "reactstrap"
+import { Card, Form, FormGroup, Input, Label, Modal } from "reactstrap"
 import StatusButton from "../components/StatusButton";
 import React from "react";
 import LabeledInput from "../components/LabeledInput";
@@ -59,17 +59,18 @@ export default function LoginView(props){
     }
 
     return (
+        <Modal isOpen={true}>
         <Card className="SurfaceLogin">
             <h3 className="HeadingFontLogin">Admin Login</h3>
             <img className="PhotoSurfaceLogin" src={logo} />
             <Form>
                 <FormGroup>
                     <LabeledInput labelClass="UsernameLabelLogin" inputClass="UsernameInputLogin" id="adminNameInput"
-                                  name="username" type="text" value={username} onChange={setUsername}
+                                  name="Username" type="text" value={username} onChange={setUsername}
                                   invalid={failedInput}/>
                                   
                     <LabeledInput labelClass="PasswordLabelLogin" inputClass="PasswordInputLogin" id="AdminPasswordInput"
-                                    name="password" type="password" value={password} onChange={setPassword}
+                                    name="Password" type="password" value={password} onChange={setPassword}
                                     invalid={failedInput}/>
                 </FormGroup>
             </Form>
@@ -79,5 +80,6 @@ export default function LoginView(props){
 
             <p className="ErrorMessageLogin" color="red">{error}</p> 
         </Card>
+        </Modal>
     )
 }

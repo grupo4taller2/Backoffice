@@ -1,21 +1,21 @@
 .MenuSurface{
     background-color: #fff;
     flex-direction: column-reverse;
+    display: flex;
     position: fixed;
-    top: 10vh;
+    top: 0vh;
     left: 1vw;
-    height: 50vh;
-    width: 15vw;
+    height: 5vh;
+    width: 98vw;
     text-align: center;
-    align-items: center;
+    align-items: flex-start;
     justify-items: center;
-    box-shadow: 2px 2px 2px 2px #898989;
+    padding-left: 1%;
 }
 
-.MenuItem{
-
+.LogOut{
     position: absolute;
+    
+    right: 1vw;
 
-    left: 2%;
-    bottom: 2%;
 }

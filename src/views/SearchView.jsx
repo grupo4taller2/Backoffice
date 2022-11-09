@@ -1,12 +1,13 @@
 import React from "react";
-import { Button, Card, Input } from "reactstrap";
+import { Button, Card, CardTitle, Input, Modal } from "reactstrap";
 import LabeledInput from "../components/LabeledInput";
 import Menu from "../components/Menu";
 import StatusButton from "../components/StatusButton";
 import UserBox from "../components/UserBox";
 import { useUserContext } from "../config/ctx";
 import { search } from "../functions/net";
-import "../style/search.css"
+import "../style/search.css";
+import "../style/screenTitle.css";
 
 export default function Search(props){
     const [searchString, setSearch] = React.useState('');
@@ -40,8 +41,8 @@ export default function Search(props){
     }
 
     return (
-            <React.Fragment>
-            <Menu />
+            <Modal isOpen={true}>
+            <Menu search={true}/>
             <Card className="SearchSurface">
                 <div className="SearchBox">
                     <LabeledInput onChange={setSearch} inputClass="SearchInput" name="username" notNamed/>
@@ -49,10 +50,10 @@ export default function Search(props){
                 </div>
                 <Card className="SearchResultBox">
                     {users.map(user => {
-                        console.log(user);
+                        
                         return <UserBox data={user} update={doSearch} admin={user.admin} username={user.username} />
                     })}
                 </Card>
             </Card>
-            </React.Fragment>);
+            </Modal>);
 }

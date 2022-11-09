@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Card, Nav, NavLink } from "reactstrap";
 import { useUserContext } from "../config/ctx";
-import "../style/menu.css"
+import "../style/menu.css";
+import "../style/screenTitle.css"
 
 export default function Menu(props){
 
@@ -13,11 +14,23 @@ export default function Menu(props){
         navigate("/")
     }
 
+    const toRules = () => {
+        navigate("/rules")
+    }
+
+    const toSearch = () => {
+        navigate("/search")
+    }
+
+
     return (
         <Card className="MenuSurface">
-            <Nav vertical>
-                <NavLink className="MenuItem" href="/" onClick={exit}>Logout</NavLink>
+            <Nav pills>
+                <NavLink className="Title" href="/search" onClick={toSearch} active={props.search}>Search users</NavLink>
+                <NavLink className="Title" href="/rules" onClick={toRules} active={props.rules}>Pricing rules</NavLink>
+                <NavLink className="LogOut" href="/" onClick={exit}>Logout</NavLink>
             </Nav>
+            
         </Card>
     );
 }

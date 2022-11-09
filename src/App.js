@@ -7,6 +7,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import Search from './views/SearchView';
 import { getAuth, signOut } from 'firebase/auth';
+import Rules from './views/RuleView';
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
         <Routes>
           <Route path='/' element={<LoginView />} />
           <Route path='/search' element={<Search />} />
+          <Route path='/rules' element={<Rules />} />
         </Routes>
       </BrowserRouter>
       </UserContext.Provider>

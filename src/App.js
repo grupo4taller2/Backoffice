@@ -2,15 +2,18 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginView from './views/LoginView';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { completeSignIn, initialState, UserContext} from './config/ctx';
+import { completeSignIn,  UserContext, initialState} from './config/ctx';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import Search from './views/SearchView';
 import { getAuth, signOut } from 'firebase/auth';
 import Rules from './views/RuleView';
+import MetricsView from './views/MetricsView';
+
+console.log("Initiating app");
 
 function App() {
-
+  
   const [userState, setState] = React.useState(initialState());
   
   
@@ -24,23 +27,25 @@ function App() {
       signOut: async () => {
         await signOut(getAuth());
         setState(initialState())
+      },
+      mantainState: async (state) => {
+        setState(state)
       }
     })
   });
 
 
   return (
-    <div className="App flex-container">
-      <UserContext.Provider value={authState} >
-      <BrowserRouter>
+    <UserContext.Provider value={authState} >
+        <div className="App flex-container">
         <Routes>
           <Route path='/' element={<LoginView />} />
           <Route path='/search' element={<Search />} />
           <Route path='/rules' element={<Rules />} />
+          <Route path='/metrics' element={<MetricsView />} />
         </Routes>
-      </BrowserRouter>
-      </UserContext.Provider>
     </div>
+      </UserContext.Provider>
   );
 }
 

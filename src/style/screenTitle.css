@@ -1,6 +1,14 @@
 .Title{
     font-size: 20px;
     font-weight: bold;
-    align-self: center;;
-    justify-self: center;
+    
+    margin-right: 5%;
+}
+
+.AdminName{
+    align-self: flex-end;
+    justify-self: flex-end;
+    margin-left: 20%;
+    font-size: 20px;
+    font-weight: bold;
 }

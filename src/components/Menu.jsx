@@ -6,31 +6,36 @@ import "../style/screenTitle.css"
 
 export default function Menu(props){
 
-    const {signOut} = useUserContext();
-    const navigate = useNavigate();
-
+    const {signOut, userState} = useUserContext();
+    const navigator = useNavigate();
+    const adminInfo = userState.userInfo.first_name + " " + userState.userInfo.last_name + " ( " + userState.userInfo.username + " ) ";
     const exit = async () => {
         await signOut();
-        navigate("/")
+        navigator("/")
     }
 
     const toRules = () => {
-        navigate("/rules")
+        navigator("/rules")
     }
 
     const toSearch = () => {
-        navigate("/search")
+        navigator("/search")
     }
 
+    const toMetrics = () => {
+        navigator("/metrics")
+    }
 
     return (
-        <Card className="MenuSurface">
-            <Nav pills>
-                <NavLink className="Title" href="/search" onClick={toSearch} active={props.search}>Search users</NavLink>
-                <NavLink className="Title" href="/rules" onClick={toRules} active={props.rules}>Pricing rules</NavLink>
+        
+            <Nav className="MenuSurface" pills>
+                <NavLink className="Title" href="#" onClick={toSearch} active={props.search}>Search users</NavLink>
+                <NavLink className="Title" href="#" onClick={toRules} active={props.rules}>Pricing rules</NavLink>
+                <NavLink className="Title" href="#" onClick={toMetrics} active={props.metrics}>Metrics</NavLink>
+                <p className="AdminName">{adminInfo}</p>
                 <NavLink className="LogOut" href="/" onClick={exit}>Logout</NavLink>
             </Nav>
             
-        </Card>
+        
     );
 }

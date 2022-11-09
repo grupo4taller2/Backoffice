@@ -1,7 +1,8 @@
 import React from 'react';
+
 import { getMyInfo } from '../functions/net';
 
-export const UserContext = React.createContext();
+
 
 export function useUserContext(){
     const context = React.useContext(UserContext);
@@ -26,6 +27,9 @@ export const initialState = () => {
     return initial;
 
 };
+
+export const UserContext = React.createContext(initialState());
+
 
 export const completeSignIn = (response, state, setState) => {
 

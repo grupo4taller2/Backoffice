@@ -1,26 +1,20 @@
 .MenuSurface{
     background-color: #fff;
-    flex-direction: column-reverse;
+    display: flex;
     position: fixed;
-    top: 10vh;
+    top: 1vh;
     left: 1vw;
-    height: 50vh;
-    width: 15vw;
+    height: 6vh;
+    width: 98vw;
     text-align: center;
     align-items: center;
-    justify-items: center;
-    box-shadow: 2px 2px 2px 2px #898989;
+    justify-items: flex-start;
+    padding-left: 5%;
 }
 
-.MenuItem{
+.LogOut{
+    position: absolute;
+    
+    right: 1vw;
 
-    height: 20%;
-    width: 80%;
-
-    font-size: 20;
-    font-weight: bold;
-
-    align-items: center;
-    justify-items: center;
-    box-shadow: 2px 2px 2px 2px #898989;
 }

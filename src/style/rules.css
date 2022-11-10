@@ -1,0 +1,105 @@
+.RuleSurface{
+    display: flex;
+    background-color: #fff;
+
+    position: fixed;
+    right: 10vw;
+    bottom: 10vh;
+
+    width: 80vw;
+    height: 80vh;
+
+        
+}
+
+.InputDiv{
+    display: flex;
+
+    flex-direction: column;
+    min-width: 50%;
+
+    align-self: flex-end;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.CoefficientInput{
+    min-width: 100%;
+    min-height: 10%;
+    margin-right: 1%;
+    justify-self: flex-end;
+}
+
+.ActiveInputBtn{
+    min-width: 20%;
+    min-height: 10%;
+
+    margin-top: 1%;
+    margin-bottom: 1%;
+
+    align-self: flex-end;
+}
+
+.ActivableDiv{
+    display: flex;
+
+    flex-direction: row;
+
+    flex-grow: 0;
+    flex-wrap: wrap;
+
+    max-width: 60%;
+
+    max-height: 60%;
+
+    margin-top: 1%;
+}
+
+.InputRow{
+    display: flex;
+
+    min-width: 100%;
+    min-height: 40%;
+
+    margin-left: 12.5%;
+
+    flex-direction: row;
+    
+}
+
+.LastRow{
+    display: flex;
+    min-width: 100%;
+    min-height: 20%;
+
+    align-self: flex-end;
+    justify-self: flex-end;
+
+    flex-direction: row;
+
+    padding: 1%;
+}
+
+
+.SaveButton{
+    min-width: 10%;
+
+    min-height: 10%;
+
+
+    align-self: flex-end;
+    justify-self: flex-start;
+}
+
+.TryButton{
+    min-width: 10%;
+
+    min-height: 10%;
+
+    margin-left: 79.5%;
+
+    align-self: flex-end;
+    justify-self: flex-end;
+}

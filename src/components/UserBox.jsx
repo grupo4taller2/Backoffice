@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, Card, Modal, ModalFooter, ModalHeader } from "reactstrap";
+import { useUserContext } from "../config/ctx";
 import { registerAdmin } from "../functions/net";
 import "../style/search.css"
+import InfoUserBox from "./InfoUserBox";
 import StatusButton from "./StatusButton";
 
 export default function UserBox(props){
@@ -11,11 +13,13 @@ export default function UserBox(props){
 
     const toggle = props.admin ? () => {} : () => {setRegister(!register)};
 
+    const context = useUserContext();
+
     const as_admin = props.admin ? () => {} : async () => {
         console.log("called");
         setLoading(true);
         try{
-            await registerAdmin(props.username);
+            await registerAdmin(props.username, context);
             await props.update();
         }catch{
             //Set an error
@@ -27,12 +31,13 @@ export default function UserBox(props){
 
     return (
                     <Card className="FoundUserBox">
-                        <Button className="InfoTag" color="primary">Info</Button>
-                        <Card  onClick={toggle} color={props.admin ? "success": "warning"} className="UserTypeTag">{props.admin ? "Admin" : "Regular user"}</Card>
+                        <InfoUserBox data={props.data}/>
+                        {!props.admin && <Button className="AdminBtn" color="primary" outline onClick={toggle}>Make admin</Button>}
+                        <Card  outline color="light" className={["UserTypeTag", props.admin ? "AdminBackground" : "RegularBackground"]}>{props.admin ? "Admin" : "Regular user"}</Card>
                         <Modal isOpen={register} toggle={toggle}>
                             <ModalHeader>{"Register " + props.username + " as admin ?"}</ModalHeader>
                             <ModalFooter>
-                                <StatusButton onPress={as_admin} color="primary" loading={loading} loadingText="" text="yes" />
+                                <StatusButton className="AdminRegBtn" onPress={as_admin} color="primary" loading={loading} loadingText="" text="yes" />
                                 <Button color="secondary" onClick={toggle}>
                                     Cancel
                                 </Button>

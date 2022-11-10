@@ -1,21 +1,41 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Card } from "reactstrap";
+import { Button, Card, Nav, NavLink } from "reactstrap";
 import { useUserContext } from "../config/ctx";
-import "../style/menu.css"
+import "../style/menu.css";
+import "../style/screenTitle.css"
 
 export default function Menu(props){
 
-    const {signOut} = useUserContext();
-    const navigate = useNavigate();
-
+    const {signOut, userState} = useUserContext();
+    const navigator = useNavigate();
+    const adminInfo = userState.userInfo.first_name + " " + userState.userInfo.last_name + " ( " + userState.userInfo.username + " ) ";
     const exit = async () => {
         await signOut();
-        navigate("/")
+        navigator("/")
+    }
+
+    const toRules = () => {
+        navigator("/rules")
+    }
+
+    const toSearch = () => {
+        navigator("/search")
+    }
+
+    const toMetrics = () => {
+        navigator("/metrics")
     }
 
     return (
-        <Card className="MenuSurface">
-            <Button className="MenuItem" onClick={exit}>Logout</Button>
-        </Card>
+        
+            <Nav className="MenuSurface" pills>
+                <NavLink className="Title" href="#" onClick={toSearch} active={props.search}>Search users</NavLink>
+                <NavLink className="Title" href="#" onClick={toRules} active={props.rules}>Pricing rules</NavLink>
+                <NavLink className="Title" href="#" onClick={toMetrics} active={props.metrics}>Metrics</NavLink>
+                <p className="AdminName">{adminInfo}</p>
+                <NavLink className="LogOut" href="/" onClick={exit}>Logout</NavLink>
+            </Nav>
+            
+        
     );
 }

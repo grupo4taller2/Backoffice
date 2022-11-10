@@ -1,6 +1,8 @@
 import React from 'react';
 
-export const UserContext = React.createContext();
+import { getMyInfo } from '../functions/net';
+
+
 
 export function useUserContext(){
     const context = React.useContext(UserContext);
@@ -26,6 +28,9 @@ export const initialState = () => {
 
 };
 
+export const UserContext = React.createContext(initialState());
+
+
 export const completeSignIn = (response, state, setState) => {
 
     updateToken(response, state);
@@ -37,13 +42,14 @@ export const completeSignIn = (response, state, setState) => {
 
 const updateToken = (response, state) => {
 
-    state.token = response._tokenResponse;
+    state.token = response.credential._tokenResponse;
 }
 
 const updateUser = (response, state) => {
 
     //Aca tengo que llamar al back y obtener la info del administrador
-    state.user = "someUser";
-
     
+    state.user = response.credential.user;
+    state.userInfo = response.userInfo;
+
 }

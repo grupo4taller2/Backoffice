@@ -8,43 +8,65 @@ import "../style/metrics.css";
 
 export default function MetricsView(props){
     const [activeMetrics, setActiveMetrics] = React.useState(true);
-
-    const user1Data = [{
-        labels: ["Federated users", "Email users"],
-        values: [100, 290],
-        type: "pie"
-    }];
-    const user1Layout = {
-        legend: {
-            x: 0,
-            y: 0
-        }
-    };
-
-    const user2Data = [{
-        x: [1, 1.5, 2, 2.5, 3, 3.5, 4],
-        y: [100, 200, 50, 15, 10, 50, 100],
-        type: "lines+markers",
-        name: "Riders"
-    },
-    {
-        x: [1, 1.5, 2, 2.5, 3, 3.5, 4],
-        y: [50, 100, 150, 150, 90, 70, 150],
-        type: "lines+markers",
-        name: "Drivers"
-    },
+    const user2Data = [
+        {
+            "x": 1,
+            "Riders": 100,
+            "Drivers": 50,
+        },
+        {
+            "x": 1.5,
+            "Riders": 200,
+            "Drivers": 100,
+        },
+        {
+            "x": 2,
+            "Riders": 50,
+            "Drivers": 150,
+        },
+        {
+            "x": 2.5,
+            "Riders": 15,
+            "Drivers": 150,
+        },
+        {
+            "x": 3,
+            "Riders": 10,
+            "Drivers": 90,
+        },
+        {
+            "x": 3.5,
+            "Riders": 50,
+            "Drivers": 70,
+        },
+        {
+            "x": 4,
+            "Riders": 100,
+            "Drivers": 150,
+        },
+        
+        
     ]
     const user2Layout = {
         legend: true,
-        xaxis: {
-            title: "Time",
-            showgrid: false,
-            zeroline: false
+        labels: {
+            x: "Time",
+            xKey: "x",
+            y: "Users"
         },
-        yaxis: {
-            title: "Total users",
-            showline: false,
-        }
+        lines: [
+            {
+                dataKey: "Riders",
+                type: "monotone",
+                stroke: "#8884d8",
+            },
+            {
+                dataKey: "Drivers",
+                type: "monotone",
+                stroke: "#82ca9d",
+            },
+            
+        ]
     }
 
     return (<Modal isOpen={true}>
@@ -55,7 +77,6 @@ export default function MetricsView(props){
                     <NavLink href="#" onClick={() => setActiveMetrics(false)} active={!activeMetrics}>Trip metrics</NavLink>
                 </Nav>
                 {activeMetrics ? <TwoMetrics title1="Total users by login" title2="Total active users by user type" 
-                                    first={user1Data} layout1={user1Layout}
                                     second={user2Data} layout2={user2Layout}/> : 
                                 <TwoMetrics title1="Trip metric 1" title2="Trip metric 2" />}
             </Card>

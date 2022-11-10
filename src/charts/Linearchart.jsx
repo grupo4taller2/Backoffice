@@ -16,7 +16,8 @@ export default function LinearChart(props){
         <ResponsiveContainer width="92.5%" height="60%" aspect={1.25}>
         <LineChart width="80%" height="80%" data={props.data}>
                     {lines.map(line => {
-                        return <Line type={line.type} dataKey={line.dataKey} stroke={line.stroke} />
+                        return <Line type={line.type} dataKey={line.dataKey} stroke={line.stroke} 
+                                    strokeWidth={2}/>
                     })}
                     <XAxis dataKey={xAxisKey}>
                         {xLabel && <Label value={xLabel} position="insideBottomRight"/>}

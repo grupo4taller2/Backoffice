@@ -8,6 +8,23 @@ import "../style/metrics.css";
 
 export default function MetricsView(props){
     const [activeMetrics, setActiveMetrics] = React.useState(true);
+
+    const user1Data = [
+        {
+            name: "Federated",
+            value: 450
+        },
+        {
+            name: "Email and password",
+            value: 900
+        }
+    ];
+
+    const user1Layout = {
+        legend: true,
+        colors: ["#1f77b4", "#ff7f0e"]
+    }
+
     const user2Data = [
         {
             "x": 1,
@@ -58,12 +75,12 @@ export default function MetricsView(props){
             {
                 dataKey: "Riders",
                 type: "monotone",
-                stroke: "#8884d8",
+                stroke: "#1f77b4",
             },
             {
                 dataKey: "Drivers",
                 type: "monotone",
-                stroke: "#82ca9d",
+                stroke: "#ff7f0e",
             },
             
         ]
@@ -76,8 +93,9 @@ export default function MetricsView(props){
                     <NavLink href="#" onClick={() => setActiveMetrics(true)} active={activeMetrics}>User metrics</NavLink>
                     <NavLink href="#" onClick={() => setActiveMetrics(false)} active={!activeMetrics}>Trip metrics</NavLink>
                 </Nav>
-                {activeMetrics ? <TwoMetrics title1="Total users by login" title2="Total active users by user type" 
-                                    second={user2Data} layout2={user2Layout}/> : 
+                {activeMetrics ? <TwoMetrics title1="Total users by login" title2="Total active users by user type"
+                                    first={user1Data}  layout1={user1Layout} type1="Pie" 
+                                    second={user2Data} layout2={user2Layout} type2="Line"/> : 
                                 <TwoMetrics title1="Trip metric 1" title2="Trip metric 2" />}
             </Card>
     </Modal>)

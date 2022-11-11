@@ -2,9 +2,17 @@ import React from "react";
 import { Button, Card, Modal } from "reactstrap";
 import { ActivableInput } from "../components/ActiveableInput";
 import Menu from "../components/Menu";
+import { useUserContext } from "../config/ctx";
+import { get_rules, patch_rules, try_rules } from "../functions/net";
 import "../style/rules.css";
 
 export default function Rules(props){
+
+    const context = useUserContext();
+
+    const [message, setMessage] = React.useState('');
+    const [errorMessage, setErrorMessage] = React.useState(false);
+
     const [kmPrice, setkmPrice] = React.useState(''); //Change to rules
     const [kmTest, setkmTest] = React.useState(''); 
     const [ratingFactor, setRatingFactor] = React.useState(''); //Change to rules
@@ -14,6 +22,81 @@ export default function Rules(props){
     const [minPrice, setminPrice] = React.useState(''); //Change to rules
     const [minPriceTry, setMinPriceTry] = React.useState(''); 
 
+    const set_values = (rules) => {
+        setkmPrice(rules.c_km);
+        setRatingFactor(rules.c_rating);
+        setminPrice(rules.c_min_price);
+        setTimeFactor(rules.c_trips_last_30m);
+    };
+
+    const load_rules = async () => {
+        setMessage('loading pricing rules...');
+        setErrorMessage(false);
+        try{
+            const rules = await get_rules(context);
+            setMessage('');
+            set_values(rules);
+        }catch{ 
+            setErrorMessage(true);
+            setMessage("Could not load pricing rules.");
+        }
+
+    };
+
+    const bundle_rules = () => {
+
+        const rules = {};
+
+        rules.c_km = kmPrice;
+        rules.c_rating = ratingFactor;
+        rules.c_min_price = minPrice;
+        rules.c_trips_last_30m = thirtyMinFactor;
+
+        return rules;
+
+    };
+
+    const update_rules = async () => {
+        setMessage("Updating pricing rules...");
+        setErrorMessage(false);
+        try{
+            const new_rules = await patch_rules(bundle_rules(), context);
+            setMessage('');
+            set_values(new_rules);
+        } catch{
+            setErrorMessage(true);
+            setMessage("Could not update pricing rules.");
+        }
+    };
+
+    const bundle_trial = () => {
+        const rules = bundle_rules();
+
+        rules.n_km = kmTest;
+        rules.n_rating = ratingTry;
+        rules.n_trips_last_30m = totalTripsTry;
+
+        return rules;
+    }
+
+    const rules_trial = async () => {
+        setMessage("Sending possible trip...");
+        setErrorMessage(false);
+        try{
+            const trial = bundle_trial();
+
+            const pricing = await try_rules(trial, context);
+
+            setMessage("Total pricing: " + pricing.price);
+
+        }catch{
+            setErrorMessage(true);
+            setMessage("Possible trip failed.")
+        }
+    }
+
+    React.useEffect( () => {load_rules()}, []);
+    
 
     return (<Modal isOpen={true}>
         <Menu rules={true}/>
@@ -31,8 +114,9 @@ export default function Rules(props){
                             tryValue={minPriceTry} tryOnChange={setMinPriceTry} tryName="Try"/>
             </div>
             <div className="LastRow">
-                <Button className="SaveButton" outline color="primary">Save Rules</Button>
-                <Button className="TryButton" outline color="primary">Try trip with rules</Button> 
+                <Button className="SaveButton" onClick={update_rules} outline color="primary">Save Rules</Button>
+                <p className={errorMessage ?"ErrorMessage" : "LoadingMessage"}>{message}</p>
+                <Button className="TryButton" onClick={rules_trial} outline color="primary">Try trip with rules</Button> 
             </div>
         </Card>
     </Modal>)

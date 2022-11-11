@@ -98,7 +98,28 @@
 
     min-height: 10%;
 
-    margin-left: 79.5%;
+    margin-left: 28.5%;
+
+    align-self: flex-end;
+    justify-self: flex-end;
+}
+
+.LoadingMessage{
+    font-size: 16px;
+    font-weight: bold;
+
+    margin-left: 28.5%;
+
+    align-self: flex-end;
+    justify-self: flex-end;
+}
+
+.ErrorMessage{
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff0000;
+
+    margin-left: 28.5%;
 
     align-self: flex-end;
     justify-self: flex-end;

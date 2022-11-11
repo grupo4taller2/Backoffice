@@ -55,6 +55,30 @@ export async function search(searchString, context){
 
 }
 
+export async function get_rules(context){
+    const token = getHeader(context);
+
+    const rules = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/pricing/rules", token)).data
+
+    return rules[0];
+}
+
+export async function patch_rules(new_rules, context){
+    const token = getHeader(context);
+    
+    const rules_patched = await (await axios.patch("https://g4-fiuber.herokuapp.com/api/v1/pricing/rules/DEFAULT_RULE", new_rules, token)).data;
+
+    return rules_patched;
+}
+
+export async function try_rules(rules, context){
+    const token = getHeader(context);
+
+    const price = await (await axios.post("https://g4-fiuber.herokuapp.com/api/v1/pricing/rules/trial", rules, token)).data;
+
+    return price;
+}
+
 function getHeader(context){
     return context.userState.user ? getToken(context.userState.user.stsTokenManager.accessToken) : null;
 }

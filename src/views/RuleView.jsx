@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, Card, Modal } from "reactstrap";
 import { ActivableInput } from "../components/ActiveableInput";
+import LoadingScreen from "../components/LoadingSpinner";
 import Menu from "../components/Menu";
+import SimplePopup from "../components/SimplePopup";
 import { useUserContext } from "../config/ctx";
 import { get_rules, patch_rules, try_rules } from "../functions/net";
 import "../style/rules.css";
@@ -12,6 +14,13 @@ export default function Rules(props){
 
     const [message, setMessage] = React.useState('');
     const [errorMessage, setErrorMessage] = React.useState(false);
+    const [popUpMessage, setPopUp] = React.useState(false);
+
+    const togglePopup = () => {
+        errorMessage ? setErrorMessage(!errorMessage) : setPopUp(!popUpMessage)
+    }
+
+    const [globalLoading, setGlobalLoading] = React.useState(false);
 
     const [kmPrice, setkmPrice] = React.useState(''); //Change to rules
     const [kmTest, setkmTest] = React.useState(''); 
@@ -30,7 +39,7 @@ export default function Rules(props){
     };
 
     const load_rules = async () => {
-        setMessage('loading pricing rules...');
+        setGlobalLoading(true);
         setErrorMessage(false);
         try{
             const rules = await get_rules(context);
@@ -40,7 +49,7 @@ export default function Rules(props){
             setErrorMessage(true);
             setMessage("Could not load pricing rules.");
         }
-
+        setGlobalLoading(false);
     };
 
     const bundle_rules = () => {
@@ -57,16 +66,19 @@ export default function Rules(props){
     };
 
     const update_rules = async () => {
-        setMessage("Updating pricing rules...");
+        setGlobalLoading(true)
         setErrorMessage(false);
         try{
             const new_rules = await patch_rules(bundle_rules(), context);
-            setMessage('');
+            setMessage("Pricing rules updated");
+            setPopUp(true);
             set_values(new_rules);
-        } catch{
+        } catch (error){
+            console.log(error);
             setErrorMessage(true);
-            setMessage("Could not update pricing rules.");
+            setMessage("Failed update pricing rules.");
         }
+        setGlobalLoading(false);
     };
 
     const bundle_trial = () => {
@@ -80,7 +92,7 @@ export default function Rules(props){
     }
 
     const rules_trial = async () => {
-        setMessage("Sending possible trip...");
+        setGlobalLoading(true);
         setErrorMessage(false);
         try{
             const trial = bundle_trial();
@@ -88,36 +100,42 @@ export default function Rules(props){
             const pricing = await try_rules(trial, context);
 
             setMessage("Total pricing: " + pricing.price);
+            setPopUp(true);
 
         }catch{
             setErrorMessage(true);
-            setMessage("Possible trip failed.")
+            setMessage("Failed to get pricing")
         }
+        setGlobalLoading(false);
     }
 
     React.useEffect( () => {load_rules()}, []);
     
-
+    
     return (<Modal isOpen={true}>
-        <Menu rules={true}/>
-        <Card className="RuleSurface">
-            <div className="InputRow">
-            <ActivableInput value={kmPrice} onChange={setkmPrice} name="Price per Km" inputClass="Km"
+                <Menu rules={true}/>
+                    <Card className="RuleSurface">
+            {globalLoading ? <LoadingScreen /> : 
+                <>
+                <SimplePopup isOpen={errorMessage || popUpMessage} toggle={togglePopup} text={message} errorClass={errorMessage ? "ErrorMessage": "Message"}/>
+                <div className="InputRow">
+                <ActivableInput value={kmPrice} onChange={setkmPrice} name="Price per Km" inputClass="Km"
                             tryValue={kmTest} tryOnChange={setkmTest} tryName="Try km"/>
-            <ActivableInput value={ratingFactor} onChange={setRatingFactor} name="Rating factor" inputClass="Km"
+                <ActivableInput value={ratingFactor} onChange={setRatingFactor} name="Rating factor" inputClass="Km"
                             tryValue={ratingTry} tryOnChange={setTryRating} tryName="Try rating"/>
-            </div>
-            <div className="InputRow">
-            <ActivableInput value={thirtyMinFactor} onChange={setTimeFactor} name="30min trip factor" inputClass="Km"
+                </div>
+                <div className="InputRow">
+                <ActivableInput value={thirtyMinFactor} onChange={setTimeFactor} name="30min trip factor" inputClass="Km"
                             tryValue={totalTripsTry} tryOnChange={setTotalTrips} tryName="Try total trips"/>
-            <ActivableInput value={minPrice} onChange={setminPrice} name="Min price" inputClass="Km"
+                <ActivableInput value={minPrice} onChange={setminPrice} name="Min price" inputClass="Km"
                             tryValue={minPriceTry} tryOnChange={setMinPriceTry} tryName="Try"/>
-            </div>
-            <div className="LastRow">
-                <Button className="SaveButton" onClick={update_rules} outline color="primary">Save Rules</Button>
-                <p className={errorMessage ?"ErrorMessage" : "LoadingMessage"}>{message}</p>
-                <Button className="TryButton" onClick={rules_trial} outline color="primary">Try trip with rules</Button> 
-            </div>
+                </div>
+                <div className="LastRow">
+                    <Button className="SaveButton" onClick={update_rules} outline color="primary">Save Rules</Button>
+                    <Button className="TryButton" onClick={rules_trial} outline color="primary">Try trip with rules</Button> 
+                </div>
+                </>
+    }
         </Card>
     </Modal>)
 }

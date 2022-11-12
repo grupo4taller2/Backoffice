@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
-import '../config/firebase'
-
+import '../config/firebase';
 
 export async function login(mail, password){
     /*
@@ -10,7 +9,6 @@ export async function login(mail, password){
     */
    const auth = getAuth();
    const credentials = await signInWithEmailAndPassword(auth, mail, password).catch(reason => console.log(reason));
-   
    const token = getHeaderFromCredential(credentials);
    
    const username = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/admins/" + mail, token)).data
@@ -53,6 +51,30 @@ export async function search(searchString, context){
 
     return await Promise.all(result)
 
+}
+
+export async function get_rules(context){
+    const token = getHeader(context);
+
+    const rules = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/pricing/rules", token)).data
+
+    return rules[0];
+}
+
+export async function patch_rules(new_rules, context){
+    const token = getHeader(context);
+    
+    const rules_patched = await (await axios.patch("https://g4-fiuber.herokuapp.com/api/v1/pricing/rules/DEFAULT_RULE", new_rules, token)).data;
+
+    return rules_patched;
+}
+
+export async function try_rules(rules, context){
+    const token = getHeader(context);
+
+    const price = await (await axios.post("https://g4-fiuber.herokuapp.com/api/v1/pricing/rules/trial", rules, token)).data;
+
+    return price;
 }
 
 function getHeader(context){

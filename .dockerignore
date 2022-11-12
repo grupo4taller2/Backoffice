@@ -1,4 +1,9 @@
 .git
+.github
+README.md
+heroku.yml
 dist
 node_modules
 build
+test
+mocks

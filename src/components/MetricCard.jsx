@@ -1,5 +1,8 @@
 import { Card, CardBody, CardHeader } from "reactstrap";
-import Plot from 'react-plotly.js';
+import { Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+
+import LinearChart from "../charts/Linearchart";
+import CustomPieChart from "../charts/PieChart";
 
 
 export default function MetricCard(props){
@@ -9,12 +12,24 @@ export default function MetricCard(props){
         <Card outline color="light" className="MetricsCard">
             <CardHeader className="CardTitle">{props.title}</CardHeader>
             <CardBody className="CardBody">
-                <Plot className="Plot"
-                config={{staticPlot: true, responsive: true}}
-                layout={props.layout}
-                    data={props.data}
-                    />
+                    {chooseChart(props.type)(props)}
             </CardBody>
         </Card>
     );
+}
+
+
+function createLinearChart(props){
+    return <LinearChart data={props.data} layout={props.layout}/>;
+}
+
+function createPieChart(props){
+    return <CustomPieChart data={props.data} layout={props.layout} />;
+}
+
+function chooseChart(choosing){
+    switch (choosing){
+        case "Line": return createLinearChart;
+        case "Pie": return createPieChart;
+    }
 }

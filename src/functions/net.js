@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
-import '../config/firebase'
-
+import '../config/firebase';
 
 export async function login(mail, password){
     /*
@@ -10,7 +9,6 @@ export async function login(mail, password){
     */
    const auth = getAuth();
    const credentials = await signInWithEmailAndPassword(auth, mail, password).catch(reason => console.log(reason));
-   
    const token = getHeaderFromCredential(credentials);
    
    const username = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/admins/" + mail, token)).data

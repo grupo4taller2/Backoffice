@@ -15,11 +15,11 @@ export default function LinearChart(props){
     return (
         <ResponsiveContainer width="92.5%" height="60%" aspect={1.25}>
         <LineChart width="80%" height="80%" data={props.data}>
-                    {lines.map(line => {
+                    {lines.map((line, index) => {
                         return <Line type={line.type} dataKey={line.dataKey} stroke={line.stroke} 
-                                    strokeWidth={2}/>
+                                    strokeWidth={2} key={"line-" + index}/>
                     })}
-                    <XAxis dataKey={xAxisKey}>
+                    <XAxis dataKey={xAxisKey} angle={-90}>
                         {xLabel && <Label value={xLabel} position="insideBottomRight"/>}
                     </XAxis>
                     <YAxis  dataKey={yAxisKey}>

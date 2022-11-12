@@ -57,7 +57,7 @@ export default function LoginView(props){
             setLoading(false);
         }
     }
-
+    
     return (
         <Modal isOpen={true}>
         <Card className="SurfaceLogin">

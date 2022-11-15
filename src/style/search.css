@@ -153,23 +153,28 @@
     display: flex;
 
     min-width: 10%;
-    max-height: 5%;
+    min-height: 2.5%;
 
     justify-content: center;
     align-items: center;
     
-    padding-top: 1.5%;
-    
-    margin-top: 2.5%;
-    margin-bottom: 2.5%;
     font-weight: bolder;
-    
+}
+
+.PagRow{
+    display: flex;
+    flex-direction: row;
+
+
+    min-width: 100%;
 }
 
 .AdvanceBtn{
-    margin-left: 65%;
+    align-self: flex-end;
 }
 
 .BackBtn{
-    margin-left: 9%;
+    align-self: flex-start;
+    margin-right: 75%;
+    margin-left: 2.5%;
 }

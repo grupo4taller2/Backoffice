@@ -12,8 +12,8 @@ export default function InfoUserBox(props){
         setShow(!show);
     }
     
-    const userType = props.data.rider_information.wallet ? "Rider" : "Driver";
-
+    const userType = props.data.driver_information.car.color ? "Driver" : "Rider";
+    
     const userInfo = userType === "Rider" ? props.data.rider_information : props.data.driver_information;
 
     let headers = Object.keys(userInfo).filter(value => value !== "car");

@@ -78,16 +78,18 @@ export default function Search(props){
                     <StatusButton loading={loading} loadingText="" onPress={searchAndShow} className="SearchButton" color="primary" text="search"/>
                 </div>
                 <Card className="SearchResultBox">
-                    {offset > 0 | pagLoading? 
-                    <StatusButton loading={pagLoading} loadingText="" onPress={goBack} color="primary" className="PagBtn" text="<<">
+                    <div className="PagRow">
+                    {offset > 0 | pagLoading ? 
+                    <StatusButton loading={pagLoading} loadingText="" onPress={goBack} color="primary" className="PagBtn BackBtn" text="<<">
                         
                     </StatusButton> 
                     : 
                     null}
-                    {users.length > 0 ? 
+                    {users.length > 9 ? 
                     <StatusButton loading={pagLoading} loadingText="" onPress={advance} className="PagBtn AdvanceBtn" color="primary" text=">>" />
                                       : 
                                       null}
+                    </div>
                     {users.map(user => {
                         
                         return <UserBox data={user} update={doSearch} admin={user.admin} username={user.username} />

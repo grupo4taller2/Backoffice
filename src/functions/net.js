@@ -31,11 +31,15 @@ export async function registerAdmin(newAdmin, context){
 }
 
 
-export async function search(searchString, context){
+export async function search(searchString, context, offset = 0, limit = 10){
 
     const token = getHeader(context);
     
-    const users = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/users/search", {headers: token.headers, params: {like: searchString}})).data
+    const users = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/users/", 
+    {headers: token.headers, 
+        params: {username_like: searchString,
+                offset: offset,
+                limit: limit}})).data
 
     const result = users.map(async value => {
         try{

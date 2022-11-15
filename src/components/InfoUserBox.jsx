@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge, Button, Card, CardBody, CardHeader, CloseButton, Modal } from "reactstrap";
+import { Badge, Button, Card, CardBody, CardHeader, CloseButton, Modal, ModalHeader } from "reactstrap";
 import "../style/search.css";
 import "../style/userCard.css";
 import InfoTable from "./InfoTable";
@@ -11,13 +11,17 @@ export default function InfoUserBox(props){
     const toggle = () => {
         setShow(!show);
     }
-    console.log(props.data);
+    
     const userType = props.data.rider_information.wallet ? "Rider" : "Driver";
 
     const userInfo = userType === "Rider" ? props.data.rider_information : props.data.driver_information;
 
     let headers = Object.keys(userInfo).filter(value => value !== "car");
     const info = headers.map(value => userInfo[value]);
+    headers.push("Name");
+    headers.push("Email");
+    info.push(props.data.first_name + " " + props.data.last_name);
+    info.push(props.data.email);
 
     const driverHeaders = userType === "Driver" && Object.keys(userInfo.car);
     const carInfo = driverHeaders && driverHeaders.map(value => userInfo.car[value]);
@@ -30,10 +34,8 @@ export default function InfoUserBox(props){
                 <Modal className="UserCardSurface" isOpen={show} toggle={toggle}>
                     <div className="CloseButtonDiv">
                         <CloseButton onClick={toggle}/>
-                        <Card outline className="UserTittle">
-                            <InfoTable headers={mainInfoHeaders} info={mainInfo} />
-                        </Card>
                     </div>
+                    <ModalHeader className="ModHead">{userType}: {props.data.username}</ModalHeader>
                         <div className="UserInfoDiv">
                     <Card className="CardShadow">
                         <CardHeader>
@@ -74,7 +76,7 @@ function pretifyHeaders(headers){
                 case "model": return "Car Model";
                 case "manufacturer": return "Car Manufacturer";
                 case "color": return "Car Color";
-                default: return "Unknown"
+                default: return value
             }
         })
     )

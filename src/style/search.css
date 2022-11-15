@@ -153,10 +153,10 @@
     display: flex;
 
     min-width: 10%;
-    min-height: 2.5%;
-
+    height: 75%;
+    margin-top: 1%;
     justify-content: center;
-    align-items: center;
+    align-content: center;
     
     font-weight: bolder;
 }
@@ -167,10 +167,13 @@
 
 
     min-width: 100%;
+    min-height: 5%;
+    justify-content: center;
 }
 
 .AdvanceBtn{
-    align-self: flex-end;
+    
+    justify-self: flex-end;
 }
 
 .BackBtn{

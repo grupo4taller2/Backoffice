@@ -9,7 +9,7 @@ export default function CustomPieChart(props){
                         return <Cell key={value.name} fill={props.layout.colors[index]} />
                     })}
                 </Pie>
-                {props.layout.legend && <Legend align="right" verticalAlign="middle" layout="vertical"/>}
+                {props.layout.legend && <Legend align="right" verticalAlign="top" layout="vertical"/>}
             </PieChart>
         </ResponsiveContainer>
     )

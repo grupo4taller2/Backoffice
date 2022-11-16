@@ -33,7 +33,7 @@ export async function getLast24HoursFrom(collectionName, base){
 }
 
 function getDocuments(){
-    let now = new Date().getTime() - 24 * hours;
+    let now = new Date().getTime() - 23 * hours;
     
     let docs = []
 

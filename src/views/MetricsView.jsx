@@ -37,6 +37,7 @@ export default function MetricsView(props){
         })
 
         login_data.map(value => {
+            
             sumed_logins.Federated += value.value.Federated;
             sumed_logins["Email and password"] += value.value.Email;
         })

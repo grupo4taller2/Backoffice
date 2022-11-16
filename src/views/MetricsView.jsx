@@ -25,11 +25,11 @@ export default function MetricsView(props){
         };
 
         login_data.map(value => {
-            sumed_logins.Federated += value.Federated;
-            sumed_logins["Email and password"] += value.Email;
+            sumed_logins.Federated += value.value.Federated;
+            sumed_logins["Email and password"] += value.value.Email;
         })
 
-        console.log(active_data);
+        
         setLoginData([
             {
                 name: "Federated",
@@ -40,7 +40,11 @@ export default function MetricsView(props){
                 value: sumed_logins["Email and password"]
             }
         ]);
-        setActive(active_data);
+        setActive(active_data.map(value => {
+            const data = {...value.value};
+            data.time = value.time;
+            return data;
+        }));
         setRetrieved(true);
         
     }
@@ -53,7 +57,7 @@ export default function MetricsView(props){
         legend: true,
         labels: {
             x: "Time",
-            xKey: "Time",
+            xKey: "time",
             y: "Users"
         },
         lines: [

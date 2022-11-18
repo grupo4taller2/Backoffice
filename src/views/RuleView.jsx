@@ -112,7 +112,7 @@ export default function Rules(props){
     React.useEffect( () => {load_rules()}, []);
     
     
-    return (<Modal isOpen={true}>
+    return (    <>
                 <Menu rules={true}/>
                     <Card className="RuleSurface">
             {globalLoading ? <LoadingScreen /> : 
@@ -140,5 +140,6 @@ export default function Rules(props){
                 </>
     }
         </Card>
-    </Modal>)
+        </>
+    )
 }

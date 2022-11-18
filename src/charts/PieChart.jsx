@@ -1,7 +1,11 @@
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 export default function CustomPieChart(props){
-    return (
+    const data = Object.keys(props.data).filter(value => {
+        return props.data[value] != 0
+    });
+    
+    return ( 
         <ResponsiveContainer width="92.5%" height="60%" aspect={1.25}>
             <PieChart width="80%" height="80%">
                 <Pie data={props.data} label={true}>

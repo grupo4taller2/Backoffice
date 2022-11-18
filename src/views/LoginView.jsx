@@ -59,7 +59,7 @@ export default function LoginView(props){
     }
     
     return (
-        <Modal isOpen={true}>
+        
         <Card className="SurfaceLogin">
             <h3 className="HeadingFontLogin">Admin Login</h3>
             <img className="PhotoSurfaceLogin" src={logo} />
@@ -80,6 +80,6 @@ export default function LoginView(props){
 
             <p className="ErrorMessageLogin" color="red">{error}</p> 
         </Card>
-        </Modal>
+        
     )
 }

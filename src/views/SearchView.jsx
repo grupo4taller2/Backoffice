@@ -8,6 +8,7 @@ import { useUserContext } from "../config/ctx";
 import { search } from "../functions/net";
 import "../style/search.css";
 import "../style/screenTitle.css";
+import LoadingScreen from "../components/LoadingSpinner";
 
 export default function Search(props){
     const [searchString, setSearch] = React.useState('');
@@ -70,31 +71,28 @@ export default function Search(props){
     }, [offset])
 
     return (
-            <Modal isOpen={true}>
+            <>
             <Menu search={true}/>
-            <Card className="SearchSurface">
-                <div className="SearchBox">
+            <div className="SearchBox">
                     <LabeledInput onChange={setSearch} inputClass="SearchInput" name="username" notNamed/>
                     <StatusButton loading={loading} loadingText="" onPress={searchAndShow} className="SearchButton" color="primary" text="search"/>
-                </div>
+            </div>
+                {pagLoading ? <LoadingScreen /> 
+                :
+                
                 <Card className="SearchResultBox">
                     <div className="PagRow">
-                    {offset > 0 | pagLoading ? 
-                    <StatusButton loading={pagLoading} loadingText="" onPress={goBack} color="primary" className="PagBtn BackBtn" text="<<">
-                        
-                    </StatusButton> 
-                    : 
-                    null}
-                    {users.length > 9 ? 
-                    <StatusButton loading={pagLoading} loadingText="" onPress={advance} className="PagBtn AdvanceBtn" color="primary" text=">>" />
-                                      : 
-                                      null}
+
+                    <StatusButton loading={pagLoading} loadingText="" onPress={offset > 0 | pagLoading ? goBack: () => {}} color={offset > 0 | pagLoading ? "primary": null} className="PagBtn" text={offset > 0 | pagLoading ? "<<": ""}/>
+                    
+                    <StatusButton loading={pagLoading} loadingText="" onPress={users.length > 9 ? advance : () => {}} className="PagBtn" color={users.length > 9 ? "primary" : "light"} text={users.length > 9 ? ">>" : ""} />            
                     </div>
                     {users.map(user => {
                         
                         return <UserBox data={user} update={doSearch} admin={user.admin} username={user.username} />
                     })}
                 </Card>
-            </Card>
-            </Modal>);
+                
+            }
+            </>);
 }

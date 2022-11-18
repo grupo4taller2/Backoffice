@@ -120,13 +120,16 @@ export default function Rules(props){
                 <SimplePopup isOpen={errorMessage || popUpMessage} toggle={togglePopup} text={message} errorClass={errorMessage ? "ErrorMessage": "Message"}/>
                 <div className="InputRow">
                 <ActivableInput value={kmPrice} onChange={setkmPrice} name="Price per Km" inputClass="Km"
-                            tryValue={kmTest} tryOnChange={setkmTest} tryName="Try km"/>
+                            tryValue={kmTest} tryOnChange={setkmTest} tryName="Try km" 
+                            tryable={true}/>
                 <ActivableInput value={ratingFactor} onChange={setRatingFactor} name="Rating factor" inputClass="Km"
-                            tryValue={ratingTry} tryOnChange={setTryRating} tryName="Try rating"/>
+                            tryValue={ratingTry} tryOnChange={setTryRating} tryName="Try rating"
+                            tryable={true}/>
                 </div>
                 <div className="InputRow">
                 <ActivableInput value={thirtyMinFactor} onChange={setTimeFactor} name="30min trip factor" inputClass="Km"
-                            tryValue={totalTripsTry} tryOnChange={setTotalTrips} tryName="Try total trips"/>
+                            tryValue={totalTripsTry} tryOnChange={setTotalTrips} tryName="Try total trips"
+                            tryable={true}/>
                 <ActivableInput value={minPrice} onChange={setminPrice} name="Min price" inputClass="Km"
                             tryValue={minPriceTry} tryOnChange={setMinPriceTry} tryName="Try"/>
                 </div>

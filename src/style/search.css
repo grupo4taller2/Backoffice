@@ -48,9 +48,10 @@
     flex-direction: column;
     font-weight: bold;
     font-size: 20px;
-
+    display: flex;
+    
+    justify-content: center;
     align-items: center;
-    justify-items: center;
    
     bottom: 5%;
     right: 0%;
@@ -62,7 +63,7 @@
     position: absolute;
 
     background-color: lightgray;
-
+    display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     overflow-y: scroll;
@@ -146,4 +147,37 @@
 
     justify-items: center;
     align-items: center;
+}
+
+.PagBtn{
+    display: flex;
+
+    min-width: 10%;
+    height: 75%;
+    margin-top: 1%;
+    justify-content: center;
+    align-content: center;
+    
+    font-weight: bolder;
+}
+
+.PagRow{
+    display: flex;
+    flex-direction: row;
+
+
+    min-width: 100%;
+    min-height: 5%;
+    justify-content: center;
+}
+
+.AdvanceBtn{
+    
+    justify-self: flex-end;
+}
+
+.BackBtn{
+    align-self: flex-start;
+    margin-right: 75%;
+    margin-left: 2.5%;
 }

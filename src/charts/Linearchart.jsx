@@ -19,8 +19,8 @@ export default function LinearChart(props){
                         return <Line type={line.type} dataKey={line.dataKey} stroke={line.stroke} 
                                     strokeWidth={2} key={"line-" + index}/>
                     })}
-                    <XAxis dataKey={xAxisKey} angle={-90}>
-                        {xLabel && <Label value={xLabel} position="insideBottomRight"/>}
+                    <XAxis dataKey={xAxisKey} angle={-90} tickCount={24} tickMargin={13}>
+                        {xLabel && <Label value={xLabel} position="left"/>}
                     </XAxis>
                     <YAxis  dataKey={yAxisKey}>
                         {yLabel && <Label value={yLabel} position="insideLeft" angle={-90}/>}

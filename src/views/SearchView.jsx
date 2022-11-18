@@ -14,13 +14,17 @@ export default function Search(props){
 
     const [loading, setLoading] = React.useState(false);
 
+    const [pagLoading, setPagLoading] = React.useState(false);
+
     const [users, setUsers] = React.useState([]);
 
     const context = useUserContext();
 
+    const [offset, setOffset] = React.useState(0);
+
     const doSearch = async () => {
         try{
-            const result = await search(searchString, context);
+            const result = await search(searchString, context, offset);
             setUsers(result);    
         }catch{
             setUsers([]);
@@ -29,6 +33,7 @@ export default function Search(props){
 
     const searchAndShow = async () => {
         setLoading(true);
+        setOffset(0);
         try{
             setUsers([]);
             await doSearch();
@@ -40,6 +45,30 @@ export default function Search(props){
         
     }
 
+    const moveOffset = async (by) => {
+        setPagLoading(true);
+        setUsers([]);
+        await doSearch();
+        setPagLoading(false);
+    }
+
+    const advance = () => {
+        setOffset(offset + 10);
+    }
+
+    const goBack = () => {
+        setOffset(offset - 10);
+    }
+
+    React.useEffect(() => {
+        const func = async () => {
+            setPagLoading(true);
+            await doSearch();
+            setPagLoading(false);
+        }
+        func()
+    }, [offset])
+
     return (
             <Modal isOpen={true}>
             <Menu search={true}/>
@@ -49,6 +78,18 @@ export default function Search(props){
                     <StatusButton loading={loading} loadingText="" onPress={searchAndShow} className="SearchButton" color="primary" text="search"/>
                 </div>
                 <Card className="SearchResultBox">
+                    <div className="PagRow">
+                    {offset > 0 | pagLoading ? 
+                    <StatusButton loading={pagLoading} loadingText="" onPress={goBack} color="primary" className="PagBtn BackBtn" text="<<">
+                        
+                    </StatusButton> 
+                    : 
+                    null}
+                    {users.length > 9 ? 
+                    <StatusButton loading={pagLoading} loadingText="" onPress={advance} className="PagBtn AdvanceBtn" color="primary" text=">>" />
+                                      : 
+                                      null}
+                    </div>
                     {users.map(user => {
                         
                         return <UserBox data={user} update={doSearch} admin={user.admin} username={user.username} />

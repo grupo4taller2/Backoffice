@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Card, Modal } from "reactstrap";
 import { ActivableInput } from "../components/ActiveableInput";
+import LabeledInput from "../components/LabeledInput";
 import LoadingScreen from "../components/LoadingSpinner";
 import Menu from "../components/Menu";
 import SimplePopup from "../components/SimplePopup";
@@ -17,7 +18,13 @@ export default function Rules(props){
     const [popUpMessage, setPopUp] = React.useState(false);
 
     const togglePopup = () => {
-        errorMessage ? setErrorMessage(!errorMessage) : setPopUp(!popUpMessage)
+        
+        if (errorMessage){
+            setErrorMessage(!errorMessage);
+        }else{
+            setPopUp(!popUpMessage)
+        }
+
     }
 
     const [globalLoading, setGlobalLoading] = React.useState(false);
@@ -116,8 +123,70 @@ export default function Rules(props){
                 <Menu rules={true}/>
                     <Card className="RuleSurface">
             {globalLoading ? <LoadingScreen /> : 
-                <>
+                <>  
                 <SimplePopup isOpen={errorMessage || popUpMessage} toggle={togglePopup} text={message} errorClass={errorMessage ? "ErrorMessage": "Message"}/>
+                    <p className="ActualRules">Actual rules</p>
+                <div className="InputRow">
+                        <div className="InputDiv">
+                   <LabeledInput inputClass="CoefficientInput"  id={"km" + "id"}
+                    name={"Price per Km"} type="text" value={kmPrice} onChange={setkmPrice}
+                    invalid={false}/>
+                        </div>
+                        <div className="InputDiv">
+                    <LabeledInput inputClass="CoefficientInput"  id={"Rating" + "id"}
+                    name={"Rating factor"} type="text" value={ratingFactor} onChange={setRatingFactor}
+                    invalid={false}/>
+                        </div>
+                    </div>
+                    <div className="InputRow">
+                        <div className="InputDiv">
+                   <LabeledInput inputClass="CoefficientInput"  id={"Min" + "id"}
+                    name={"30 min trip factor"} type="text" value={thirtyMinFactor} onChange={setTimeFactor}
+                    invalid={false}/>
+                        </div>
+                        <div className="InputDiv">
+                    <LabeledInput inputClass="CoefficientInput"  id={"MinPrice" + "id"}
+                    name={"Min price"} type="text" value={minPrice} onChange={setminPrice}
+                    invalid={false}/>
+                        </div>
+                    </div>
+                    <div className="LastRow">
+                    <Button className="SaveButton" onClick={update_rules} outline color="primary">Save Rules</Button>
+                    </div>
+
+                    <p className="TryValues">Try values</p>
+
+                    <div className="InputRow">
+                        <div className="InputDiv">
+                   <LabeledInput inputClass="CoefficientInput"  id={"kmTry" + "id"}
+                    name={"Test Km"} type="text" value={kmTest} onChange={setkmTest}
+                    invalid={false}/>
+                        </div>
+                        <div className="InputDiv">
+                    <LabeledInput inputClass="CoefficientInput"  id={"Rating" + "id"}
+                    name={"Rating from user"} type="text" value={ratingTry} onChange={setTryRating}
+                    invalid={false}/>
+                        </div>
+                    </div>
+                    <div className="InputRow">
+                        <div className="InputDiv">
+                   <LabeledInput inputClass="CoefficientInput"  id={"Min" + "id"}
+                    name={"Trips in the last 30 mins"} type="text" value={totalTripsTry} onChange={setTotalTrips}
+                    invalid={false}/>
+                        </div>
+                    </div>
+                    <div className="LastRow">
+                        <Button className="TryButton" onClick={rules_trial} outline color="primary">Try trip with rules</Button> 
+                    </div>
+                </>
+    }
+        </Card>
+        </>
+    )
+}
+
+/*
+<SimplePopup isOpen={errorMessage || popUpMessage} toggle={togglePopup} text={message} errorClass={errorMessage ? "ErrorMessage": "Message"}/>
                 <div className="InputRow">
                 <ActivableInput value={kmPrice} onChange={setkmPrice} name="Price per Km" inputClass="Km"
                             tryValue={kmTest} tryOnChange={setkmTest} tryName="Try km" 
@@ -137,9 +206,4 @@ export default function Rules(props){
                     <Button className="SaveButton" onClick={update_rules} outline color="primary">Save Rules</Button>
                     <Button className="TryButton" onClick={rules_trial} outline color="primary">Try trip with rules</Button> 
                 </div>
-                </>
-    }
-        </Card>
-        </>
-    )
-}
+*/

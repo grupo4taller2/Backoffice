@@ -106,10 +106,7 @@ export default function MetricsView(props){
             <>
             <Menu metrics={true} />
             
-                <Nav className="MetricsNav" pills>
-                    <NavLink href="#" onClick={() => setActiveMetrics(true)} active={activeMetrics}>User metrics</NavLink>
-                    <NavLink href="#" onClick={() => setActiveMetrics(false)} active={!activeMetrics}>Trip metrics</NavLink>
-                </Nav>
+                
                 {retrieved ? (activeMetrics ? <TwoMetrics title1="Total users by login (last 24Hrs)" 
                                     title2="Total active users by user type"
                                     title3="Total new users by signup (last 24Hrs)"
@@ -119,6 +116,10 @@ export default function MetricsView(props){
                                 <TwoMetrics title1="Trip metric 1" title2="Trip metric 2" />) : 
                                 <LoadingScreen />
                 }
+                <Nav className="MetricsNav" pills>
+                    <NavLink href="#" onClick={() => setActiveMetrics(true)} active={activeMetrics}>User metrics</NavLink>
+                    <NavLink href="#" onClick={() => setActiveMetrics(false)} active={!activeMetrics}>Trip metrics</NavLink>
+                </Nav>
             
             </>
     )

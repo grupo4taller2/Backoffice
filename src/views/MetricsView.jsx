@@ -105,7 +105,7 @@ export default function MetricsView(props){
     return (
             <>
             <Menu metrics={true} />
-            
+                
                 
                 {retrieved ? (activeMetrics ? <TwoMetrics title1="Total users by login (last 24Hrs)" 
                                     title2="Total active users by user type"

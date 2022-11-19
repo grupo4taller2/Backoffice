@@ -125,7 +125,7 @@ export default function Rules(props){
             {globalLoading ? <LoadingScreen /> : 
                 <>  
                 <SimplePopup isOpen={errorMessage || popUpMessage} toggle={togglePopup} text={message} errorClass={errorMessage ? "ErrorMessage": "Message"}/>
-                    <p className="ActualRules">Actual rules</p>
+                    <p className="ActualRules">Rules</p>
                 <div className="InputRow">
                         <div className="InputDiv">
                    <LabeledInput inputClass="CoefficientInput"  id={"km" + "id"}

@@ -11,8 +11,16 @@
 }
 
 .MetricsNav{
-    align-self: center;
-    justify-self: center;
+    position: fixed;
+    
+    bottom: 10%;
+    left: 0%;
+    width: 100%;
+    
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
     margin-top: 1%;
 }
 

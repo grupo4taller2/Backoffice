@@ -101,13 +101,12 @@ export default function MetricsView(props){
     React.useEffect(() => {
         retrieve();
     }, [])
-    return (<Modal isOpen={true}>
+    console.log(newUsers)
+    return (
+            <>
             <Menu metrics={true} />
-            <Card className="MetricsSurface">
-                <Nav className="MetricsNav" pills>
-                    <NavLink href="#" onClick={() => setActiveMetrics(true)} active={activeMetrics}>User metrics</NavLink>
-                    <NavLink href="#" onClick={() => setActiveMetrics(false)} active={!activeMetrics}>Trip metrics</NavLink>
-                </Nav>
+                
+                
                 {retrieved ? (activeMetrics ? <TwoMetrics title1="Total users by login (last 24Hrs)" 
                                     title2="Total active users by user type"
                                     title3="Total new users by signup (last 24Hrs)"
@@ -117,6 +116,11 @@ export default function MetricsView(props){
                                 <TwoMetrics title1="Trip metric 1" title2="Trip metric 2" />) : 
                                 <LoadingScreen />
                 }
-            </Card>
-    </Modal>)
+                <Nav className="MetricsNav" pills>
+                    <NavLink href="#" onClick={() => setActiveMetrics(true)} active={activeMetrics}>User metrics</NavLink>
+                    <NavLink href="#" onClick={() => setActiveMetrics(false)} active={!activeMetrics}>Trip metrics</NavLink>
+                </Nav>
+            
+            </>
+    )
 }

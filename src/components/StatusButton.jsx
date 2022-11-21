@@ -13,6 +13,6 @@ export default function StatusButton(props){
                          <span>
                             {' ' + props.loadingText}
                         </span>
-                        </React.Fragment>) : <p>{props.text}</p>}
+                        </React.Fragment>) : props.text}
         </Button>)
 }

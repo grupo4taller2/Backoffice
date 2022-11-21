@@ -1,6 +1,7 @@
 .MenuSurface{
     background-color: #fff;
     display: flex;
+    flex-direction: row;
     position: fixed;
     top: 1vh;
     left: 1vw;
@@ -10,11 +11,22 @@
     align-items: center;
     justify-items: flex-start;
     padding-left: 5%;
+    border: #000;
+    border-width: 5px;
 }
 
 .LogOut{
     position: absolute;
     
     right: 1vw;
+
+}
+
+.Menu{
+    width: 30%;
+    font-size: 20px;
+
+    align-self: center;
+    justify-self: center;
 
 }

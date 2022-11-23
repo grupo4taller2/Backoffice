@@ -33,7 +33,16 @@
     height: 30%;
     width: 15%;
 
-    left: 37.5%;
+    left: 30.5%;
+    bottom: 35%;
+}
+
+.BlockBtn{
+    position: absolute;
+    height: 30%;
+    width: 15%;
+
+    left: 46.5%;
     bottom: 35%;
 }
 
@@ -144,10 +153,11 @@
 }
 
 .AdminRegBtn{
+    display: flex;
     position: absolute;
     bottom: 8%;
-    right: 18%;
-    width: 10%;
+    right: 25%;
+    width: 12%;
     height: 29%;
 
     justify-items: center;

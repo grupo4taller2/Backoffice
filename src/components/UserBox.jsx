@@ -5,6 +5,7 @@ import { registerAdmin } from "../functions/net";
 import "../style/search.css"
 import InfoUserBox from "./InfoUserBox";
 import StatusButton from "./StatusButton";
+import WalletDeposit from "./WalletDeposit";
 
 export default function UserBox(props){
     const [register, setRegister] = React.useState(false);
@@ -46,6 +47,7 @@ export default function UserBox(props){
     return (
                     <Card className="FoundUserBox">
                         <InfoUserBox data={props.data}/>
+                        <WalletDeposit username={props.username}/>
                         {!props.admin && <Button className="AdminBtn" color="primary" outline onClick={toggle}>Make admin</Button>}
                         {!props.admin && (!props.isBlocked ? 
                         <Button className="BlockBtn" color="danger" outline onClick={toggleBlock}>Block User</Button>

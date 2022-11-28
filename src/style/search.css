@@ -118,28 +118,22 @@
 
 .UserTypeTag{
 
-    position: absolute;
-
-    font-size: larger;
     font-weight: bold;
-    
 
-    right: 2%;
-    bottom: 55%;
+    font-size: 20px;
 
-    width: 20%;
-    height: 30%;
+    justify-self:flex-end;
+    align-self: center;
 
-    font-size: 16px;
-
-    align-items: center;
-    justify-content: center;
+    position: absolute;
+    bottom: 15%;
+    left: 5%
 
 }
 
 .InfoTag{
     position: absolute;
-    bottom: 5%;
+    bottom: 15%;
     width: 20%;
     height: 30%;
 

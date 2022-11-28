@@ -52,7 +52,6 @@ export default function UserBox(props){
                         :
                         <Button className="BlockBtn" color="success" outline onClick={toggleBlock}>UnBlock User</Button>
                         )}
-                        <Card  outline color="light" className={["UserTypeTag", props.admin ? "AdminBackground" : "RegularBackground"]}>{props.admin ? "Admin" : "Regular user"}</Card>
                         <Modal isOpen={register || changeBlockStatus} toggle={register ? toggle : toggleBlock}>
                             <ModalHeader>
                                 {  register ? 
@@ -68,7 +67,10 @@ export default function UserBox(props){
                             </ModalFooter>
                         </Modal>
                         <p className="UsernameTag">{props.username}</p>
+                        <p className="UserTypeTag">{props.admin ? "Admin" : "Regular user"}</p>
                     </Card>
         
     )
 }
+
+//<Card  outline color="light" className={["UserTypeTag", props.admin ? "AdminBackground" : "RegularBackground"]}>{props.admin ? "Admin" : "Regular user"}</Card>

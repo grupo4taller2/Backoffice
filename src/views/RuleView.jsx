@@ -125,7 +125,9 @@ export default function Rules(props){
             {globalLoading ? <LoadingScreen /> : 
                 <>  
                 <SimplePopup isOpen={errorMessage || popUpMessage} toggle={togglePopup} text={message} errorClass={errorMessage ? "ErrorMessage": "Message"}/>
-                    <p className="ActualRules">Rules</p>
+                    <div className="HeaderDiv">
+                        Rules
+                    </div>
                 <div className="InputRow">
                         <div className="InputDiv">
                    <LabeledInput inputClass="CoefficientInput"  id={"km" + "id"}
@@ -154,8 +156,9 @@ export default function Rules(props){
                     <Button className="SaveButton" onClick={update_rules} outline color="primary">Save Rules</Button>
                     </div>
 
-                    <p className="TryValues">Try values</p>
-
+                    <div className="HeaderDiv">
+                        Try values
+                    </div>
                     <div className="InputRow">
                         <div className="InputDiv">
                    <LabeledInput inputClass="CoefficientInput"  id={"kmTry" + "id"}

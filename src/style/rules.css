@@ -123,19 +123,13 @@
     justify-self: flex-end;
 }
 
-.ActualRules{
+.HeaderDiv{
+    display: flex;
+    width: 100%;
     font-size: 30px;
     font-weight: bolder;
+    
+    justify-content: center;
+    align-content: center;
 
-    position: fixed;
-    left: 49%
-}
-
-.TryValues{
-    font-size: 30px;
-    font-weight: bolder;
-
-    position: fixed;
-    top: 49%;
-    left: 48%
 }

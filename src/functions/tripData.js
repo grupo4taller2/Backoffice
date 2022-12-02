@@ -28,7 +28,8 @@ export async function getTripData(){
     
     return {
         byDistance: processed,
-        driverTripsFreq: driverByTrips(data)
+        driverTripsFreq: driverByTrips(data),
+        priceDist: priceDistribution(data)
     }
 }
 
@@ -57,5 +58,27 @@ function driverByTrips(data){
         frequency[value]++;
     })
 
-    return frequency
+    return Object.keys(frequency).map(value => {
+        return {
+            drivers: frequency[value],
+            trips: parseInt(value)
+        }
+    })
 }
+
+function priceDistribution(data){
+
+    const prices = data.map(value => {
+        return parseFloat(value.estimated_price)
+    }).sort()
+
+    const count = prices.length;
+
+    
+
+    return prices.map((value, index) => {
+        return {value: parseFloat((value * 1000).toString().slice(0, 4)),
+
+                quantile: (index + 1) / count}
+    })
+}   

@@ -17,6 +17,7 @@ export default function MetricsView(props){
     const [newUsers, setNewUsers] = React.useState([]);
     const [tripsLength, setTripsLength] = React.useState([]);
     const [driverFreq, setDriverFreq] = React.useState([]);
+    const [priceDist, setPriceDist] = React.useState([]);
 
     const retrieve = async () => {
         let login_data = await getLast24HoursFrom("logins", {"Federated": 0, "Email": 0});
@@ -24,7 +25,7 @@ export default function MetricsView(props){
         let active_data = await getLast24HoursFrom("active", {"Driver": 0, "Rider": 0});
 
         let trip_metrics = await getTripData();
-        console.log(trip_metrics)
+        
 
         const sumed_logins = {
             "Federated": 0,
@@ -77,6 +78,7 @@ export default function MetricsView(props){
         setRetrieved(true);
         setDriverFreq(trip_metrics.driverTripsFreq);
         setTripsLength(trip_metrics.byDistance);
+        setPriceDist(trip_metrics.priceDist);
         
     }
     const user1Layout = {
@@ -117,13 +119,42 @@ export default function MetricsView(props){
             {
                 dataKey: "value",
                 type: "step",
-                stroke: "#1f77b4"
+                stroke: "#ff7f0e"
             }
         ]
     }
 
     const trip2Layout = {
-         
+        labels: {
+            x: "Trips",
+            xKey: "trips",
+            y: "Drivers"
+        },
+
+        lines: [
+            {
+                dataKey: "drivers",
+                type: "step",
+                stroke: "#ff7f0e"
+            }
+        ]
+    }
+
+    const trip3Layout = {
+        legend: true,
+        labels: {
+            x: "Keth",
+            xKey: "value",
+            y: "Users"
+        },
+        lines: [
+            {
+                dataKey: "quantile",
+                type: "monotone",
+                stroke: "#1f77b4",
+            }
+            
+        ]
     }
     React.useEffect(() => {
         retrieve();
@@ -140,12 +171,12 @@ export default function MetricsView(props){
                                     first={loginData}  layout1={user1Layout} type1="Pie" 
                                     second={active} layout2={user2Layout} type2="Line"
                                     third={newUsers} layout3={user1Layout} type3="Pie"/> : 
-                                <TwoMetrics title1="Distance distribution" 
-                                title2="Total active users by user type"
-                                title3="Total new users by signup (last 24Hrs)"
-                                third={tripsLength}  layout3={trip1Layout} type3="Line" 
-                                second={active} layout2={user2Layout} type2="Line"
-                                first={newUsers} layout1={user1Layout} type1="Pie" />) : 
+                                <TwoMetrics title3="Distance distribution" 
+                                title2="Trips price distribution"
+                                title1="Drivers trips frequency"
+                                third={tripsLength}  layout3={trip1Layout} type3="Bar" 
+                                second={priceDist} layout2={trip3Layout} type2="Line"
+                                first={driverFreq} layout1={trip2Layout} type1="Bar" />) : 
                                 <LoadingScreen />
                 }
                 <Nav className="MetricsNav" pills>

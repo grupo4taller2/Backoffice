@@ -52,9 +52,9 @@ export default function TransactionsView(props){
                 <Card className="ResultsBoxTransactions">
                     <div className="PagRowTransactions">
 
-                    <StatusButton  className="TransactionsPagBtn" loadingText="" onPress={offset > 0 | pagLoading ? goBack: () => {}} color={offset > 0 | pagLoading ? "dark": null} text={offset > 0 | pagLoading ? "<<": ""}/>
+                    <StatusButton  outline className="TransactionsPagBtn" loadingText="" onPress={offset > 0 | pagLoading ? goBack: () => {}} color={offset > 0 | pagLoading ? "dark": null} text={offset > 0 | pagLoading ? "<<": ""}/>
                     
-                    <StatusButton  className="TransactionsPagBtn"  loadingText="" onPress={transactions.length > 9 ? advance : () => {}}  color={transactions.length > 9 ? "dark" : null} text={transactions.length > 9 ? ">>" : ""} />            
+                    <StatusButton  outline className="TransactionsPagBtn"  loadingText="" onPress={transactions.length > 9 ? advance : () => {}}  color={transactions.length > 9 ? "dark" : null} text={transactions.length > 9 ? ">>" : ""} />            
                     </div>
                     <Table className="TableDiv" bordered striped>
                     <thead>

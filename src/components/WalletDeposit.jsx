@@ -76,7 +76,7 @@ export default function WalletDeposit(props){
     }, [])
 
     return <>
-                <Button onClick={toggle} className="WalletTag" color="success">Wallet</Button>
+                <Button outline onClick={toggle} className="WalletTag" color="success">Wallet</Button>
                 <Modal className="UserCardSurface" isOpen={toggled} toggle={toggle}>
                     <div className="CloseButtonDiv">
                         <CloseButton onClick={toggle}/>

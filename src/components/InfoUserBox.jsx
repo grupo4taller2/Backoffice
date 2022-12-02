@@ -30,7 +30,7 @@ export default function InfoUserBox(props){
     const mainInfo = [userType, props.data.username, props.data.first_name + " " + props.data.last_name, props.data.email];
 
     return (<>
-                <Button onClick={toggle}  className="InfoTag" color="primary">Info</Button>
+                <Button outline onClick={toggle}  className="InfoTag" color="primary">Info</Button>
                 <Modal className="UserCardSurface" isOpen={show} toggle={toggle}>
                     <div className="CloseButtonDiv">
                         <CloseButton onClick={toggle}/>

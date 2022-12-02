@@ -6,7 +6,7 @@ export default function StatusButton(props){
     
     
 
-    return (<Button className={props.className} color={props.color} onClick={props.onPress}>
+    return (<Button className={props.className} color={props.color} onClick={props.onPress} outline={props.outline}>
         {props.loading ? (<React.Fragment>
                          <Spinner size="sm">
                           </Spinner>

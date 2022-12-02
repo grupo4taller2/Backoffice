@@ -81,6 +81,35 @@ export async function try_rules(rules, context){
     return price;
 }
 
+export async function get_balance(context, username){
+    const token = getHeader(context);
+
+    const wallet = await (await axios.get(`https://g4-fiuber.herokuapp.com/api/v1/payments/${username}/wallet`, token)).data
+
+    return wallet;
+}
+
+export async function get_contract_balance(context){
+    const token = getHeader(context);
+
+    const balance = (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/payments/contract/balance", token)).data
+
+    return balance.balance
+}
+
+export async function deposit(context, userWallet, amount){
+    const token = getHeader(context);
+
+    const data = {
+        admin_username: context.userState.userInfo.username,
+        amount: parseFloat(amount),
+        walletAddress: userWallet
+    }
+
+    await axios.post("https://g4-fiuber.herokuapp.com/api/v1/payments/create/deposit", data, token)
+
+}
+
 function getHeader(context){
     return context.userState.user ? getToken(context.userState.user.stsTokenManager.accessToken) : null;
 }

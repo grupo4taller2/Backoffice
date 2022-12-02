@@ -89,7 +89,7 @@ export default function Search(props){
                     </div>
                     {users.map(user => {
                         
-                        return <UserBox data={user} update={doSearch} admin={user.admin} username={user.username} />
+                        return <UserBox data={user} update={doSearch} admin={user.admin} username={user.username} isBlocked={user.isBlocked}/>
                     })}
                 </Card>
                 

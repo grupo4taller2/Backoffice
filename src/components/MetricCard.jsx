@@ -1,5 +1,6 @@
 import { Card, CardBody, CardHeader } from "reactstrap";
 import { Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import CustomBarGraph from "../charts/BarChart";
 
 import LinearChart from "../charts/Linearchart";
 import CustomPieChart from "../charts/PieChart";
@@ -27,9 +28,14 @@ function createPieChart(props){
     return <CustomPieChart data={props.data} layout={props.layout} />;
 }
 
+function CreateBarGraph(props){
+    return <CustomBarGraph data={props.data} layout={props.layout} />
+}
+
 function chooseChart(choosing){
     switch (choosing){
         case "Line": return createLinearChart;
         case "Pie": return createPieChart;
+        case "Bar": return CreateBarGraph;
     }
 }

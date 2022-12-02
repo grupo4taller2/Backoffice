@@ -5,6 +5,7 @@ import Menu from "../components/Menu";
 
 import TwoMetrics from "../components/TwoMetrics";
 import { getLast24HoursFrom } from "../functions/data";
+import { getTripData } from "../functions/tripData";
 
 import "../style/metrics.css";
 
@@ -14,12 +15,16 @@ export default function MetricsView(props){
     const [loginData, setLoginData] = React.useState([]);
     const [active, setActive] = React.useState([]);
     const [newUsers, setNewUsers] = React.useState([]);
-    
+    const [tripsLength, setTripsLength] = React.useState([]);
+    const [driverFreq, setDriverFreq] = React.useState([]);
 
     const retrieve = async () => {
         let login_data = await getLast24HoursFrom("logins", {"Federated": 0, "Email": 0});
         let creation_data = await getLast24HoursFrom("signup", {"Federated": 0, "Email": 0});
         let active_data = await getLast24HoursFrom("active", {"Driver": 0, "Rider": 0});
+
+        let trip_metrics = await getTripData();
+        console.log(trip_metrics)
 
         const sumed_logins = {
             "Federated": 0,
@@ -70,6 +75,8 @@ export default function MetricsView(props){
             return data;
         }));
         setRetrieved(true);
+        setDriverFreq(trip_metrics.driverTripsFreq);
+        setTripsLength(trip_metrics.byDistance);
         
     }
     const user1Layout = {
@@ -98,6 +105,26 @@ export default function MetricsView(props){
             
         ]
     }
+
+    const trip1Layout = {
+        labels: {
+            x: "Km",
+            xKey: "length",
+            y: "%"
+        },
+
+        lines: [
+            {
+                dataKey: "value",
+                type: "step",
+                stroke: "#1f77b4"
+            }
+        ]
+    }
+
+    const trip2Layout = {
+         
+    }
     React.useEffect(() => {
         retrieve();
     }, [])
@@ -113,7 +140,12 @@ export default function MetricsView(props){
                                     first={loginData}  layout1={user1Layout} type1="Pie" 
                                     second={active} layout2={user2Layout} type2="Line"
                                     third={newUsers} layout3={user1Layout} type3="Pie"/> : 
-                                <TwoMetrics title1="Trip metric 1" title2="Trip metric 2" />) : 
+                                <TwoMetrics title1="Distance distribution" 
+                                title2="Total active users by user type"
+                                title3="Total new users by signup (last 24Hrs)"
+                                third={tripsLength}  layout3={trip1Layout} type3="Line" 
+                                second={active} layout2={user2Layout} type2="Line"
+                                first={newUsers} layout1={user1Layout} type1="Pie" />) : 
                                 <LoadingScreen />
                 }
                 <Nav className="MetricsNav" pills>

@@ -9,6 +9,7 @@ import Search from './views/SearchView';
 import { getAuth, signOut } from 'firebase/auth';
 import Rules from './views/RuleView';
 import MetricsView from './views/MetricsView';
+import TransactionsView from './views/TransactionsView';
 
 console.log("Initiating app");
 
@@ -43,6 +44,7 @@ function App() {
           <Route path='/search' element={<Search />} />
           <Route path='/rules' element={<Rules />} />
           <Route path='/metrics' element={<MetricsView />} />
+          <Route path='/transactions' element={<TransactionsView />} />
         </Routes>
     </div>
       </UserContext.Provider>

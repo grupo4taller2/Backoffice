@@ -20,7 +20,7 @@ export default function MetricsView(props){
     const [tripsLength, setTripsLength] = React.useState([]);
     const [driverFreq, setDriverFreq] = React.useState([]);
     const [priceDist, setPriceDist] = React.useState([]);
-    const [paymentsPerHour, setPerHour] = React.useState([]);
+    const [paymentsVsWithdraws, setPayVsWith] = React.useState([]);
 
 
     const retrieve = async () => {
@@ -84,7 +84,16 @@ export default function MetricsView(props){
         setDriverFreq(trip_metrics.driverTripsFreq);
         setTripsLength(trip_metrics.byDistance);
         setPriceDist(trip_metrics.priceDist);
-        setPerHour(transaction_metrics.totalByHours);
+        setPayVsWith([
+            {
+                name: "Payments (kETH)",
+                value: transaction_metrics.withdrawsVsPayments.payments
+            },
+            {
+                name: "Withdrawals (kETH)",
+                value: transaction_metrics.withdrawsVsPayments.withdraws
+            }
+        ]);
     }
     const user1Layout = {
         legend: true,
@@ -163,19 +172,8 @@ export default function MetricsView(props){
     }
 
     const transactions1Layout = {
-        labels: {
-            x: "Time",
-            xKey: "hour",
-            y: "Total (kETH)"
-        },
-
-        lines: [
-            {
-                dataKey: "totalPayments",
-                type: "monotone",
-                stroke: "#ff7f0e"
-            }
-        ]
+        legend: true,
+        colors: ["#1f77b4", "#ff7f0e"]
     }
 
     React.useEffect(() => {
@@ -204,7 +202,7 @@ export default function MetricsView(props){
 
                 {retrieved && activeMetrics === 3 && 
                 <div className="OneMetricDiv">
-                <MetricCard title="Payments per hour" layout={transactions1Layout} data={paymentsPerHour} type="Line" />
+                <MetricCard title="Payments Vs Withdrawals" layout={transactions1Layout} data={paymentsVsWithdraws} type="Pie" />
                 </div>}
 
                 

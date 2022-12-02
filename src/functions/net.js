@@ -57,6 +57,15 @@ export async function search(searchString, context, offset = 0, limit = 10){
 
 }
 
+export async function loadTransactions(context, offset, limit=10) {
+
+    const token = getHeader(context);
+
+    const transactions = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/payments/transactions", {headers: token.headers, params: {offset: offset,limit: limit}})).data
+
+    return transactions;
+}
+
 export async function get_rules(context){
     const token = getHeader(context);
 

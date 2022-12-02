@@ -5,29 +5,30 @@ export async function getTransactionData(){
     const data = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/payments/transactions/24")).data;
 
     return {
-        totalByHours: getSumByHour(data),
+        withdrawsVsPayments: paymentsVsWithdraws(data),
 
     }
 
 }
 
 
-function getSumByHour(data){
+function paymentsVsWithdraws(data){
 
-    const sums = {};
+    const totals = {
+        payments: 0,
+        withdraws: 0
+    }
 
-    data.map(value => {
-        const hours = new Date(value.createdAt).getHours();
-        if(!sums[hours]){
-            sums[hours] = 0;
-        }
-        sums[hours] += value.amount;
+    data.payments.map(value => {
+        totals.payments += value.amount
+    });
+
+    data.withdraws.map(value => {
+        totals.withdraws += value.amount
     })
+    totals.payments *= 1000;
+    totals.withdraws *= 1000;
 
-    return Object.keys(sums).map(value => {
-        return {
-            hour: value + "Hr",
-            totalPayments: sums[value] * 1000
-        }
-    })
+    return totals
+
 }

@@ -2,9 +2,11 @@ import React from "react";
 import { Card, Modal, Nav, NavLink } from "reactstrap";
 import LoadingScreen from "../components/LoadingSpinner";
 import Menu from "../components/Menu";
+import MetricCard from "../components/MetricCard";
 
 import TwoMetrics from "../components/TwoMetrics";
 import { getLast24HoursFrom } from "../functions/data";
+import { getTransactionData } from "../functions/transactionData";
 import { getTripData } from "../functions/tripData";
 
 import "../style/metrics.css";
@@ -18,6 +20,8 @@ export default function MetricsView(props){
     const [tripsLength, setTripsLength] = React.useState([]);
     const [driverFreq, setDriverFreq] = React.useState([]);
     const [priceDist, setPriceDist] = React.useState([]);
+    const [paymentsPerHour, setPerHour] = React.useState([]);
+
 
     const retrieve = async () => {
         let login_data = await getLast24HoursFrom("logins", {"Federated": 0, "Email": 0});
@@ -25,7 +29,8 @@ export default function MetricsView(props){
         let active_data = await getLast24HoursFrom("active", {"Driver": 0, "Rider": 0});
 
         let trip_metrics = await getTripData();
-        
+        let transaction_metrics = await getTransactionData();
+        console.log(transaction_metrics)
 
         const sumed_logins = {
             "Federated": 0,
@@ -79,7 +84,7 @@ export default function MetricsView(props){
         setDriverFreq(trip_metrics.driverTripsFreq);
         setTripsLength(trip_metrics.byDistance);
         setPriceDist(trip_metrics.priceDist);
-        
+        setPerHour(transaction_metrics.totalByHours);
     }
     const user1Layout = {
         legend: true,
@@ -156,6 +161,23 @@ export default function MetricsView(props){
             
         ]
     }
+
+    const transactions1Layout = {
+        labels: {
+            x: "Time",
+            xKey: "hour",
+            y: "Total (kETH)"
+        },
+
+        lines: [
+            {
+                dataKey: "totalPayments",
+                type: "monotone",
+                stroke: "#ff7f0e"
+            }
+        ]
+    }
+
     React.useEffect(() => {
         retrieve();
     }, [])
@@ -179,6 +201,11 @@ export default function MetricsView(props){
                                 third={tripsLength}  layout3={trip1Layout} type3="Bar" 
                                 second={priceDist} layout2={trip3Layout} type2="Line"
                                 first={driverFreq} layout1={trip2Layout} type1="Bar" />}
+
+                {retrieved && activeMetrics === 3 && 
+                <div className="OneMetricDiv">
+                <MetricCard title="Payments per hour" layout={transactions1Layout} data={paymentsPerHour} type="Line" />
+                </div>}
 
                 
                 <Nav className="MetricsNav" pills>

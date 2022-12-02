@@ -11,7 +11,7 @@ export default function LinearChart(props){
     const yLabel = props.layout.labels.y;
     
     const lines = props.layout.lines;
-    
+    console.log(props.data);
     return (
         <ResponsiveContainer width="92.5%" height="60%" aspect={1.25}>
         <LineChart width="80%" height="80%" data={props.data}>
@@ -19,7 +19,7 @@ export default function LinearChart(props){
                         return <Line type={line.type} dataKey={line.dataKey} stroke={line.stroke} 
                                     strokeWidth={2} key={"line-" + index}/>
                     })}
-                    <XAxis dataKey={xAxisKey} angle={-90} tickCount={24} tickMargin={13}>
+                    <XAxis dataKey={xAxisKey} angle={-90}  tickMargin={13}>
                         {xLabel && <Label value={xLabel} position="left"/>}
                     </XAxis>
                     <YAxis  dataKey={yAxisKey}>

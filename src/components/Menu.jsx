@@ -26,12 +26,17 @@ export default function Menu(props){
         navigator("/metrics")
     }
 
+    const toTransactions = () => {
+        navigator("/transactions")
+    }
+
     return (
             <Card className="MenuSurface">
             <Nav  className="Menu" pills>
                 <NavLink className="Title" href="#" onClick={toSearch} active={props.search}>Search users</NavLink>
                 <NavLink className="Title" href="#" onClick={toRules} active={props.rules}>Pricing rules</NavLink>
                 <NavLink className="Title" href="#" onClick={toMetrics} active={props.metrics}>Metrics</NavLink>
+                <NavLink className="Title" href="#" onClick={toTransactions}  active={props.transactions}>Transactions</NavLink>
                 <NavLink className="LogOut" href="/" onClick={exit}>Logout</NavLink>
             </Nav>
                 <p className="AdminName">{adminInfo}</p>

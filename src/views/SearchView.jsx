@@ -83,13 +83,13 @@ export default function Search(props){
                 <Card className="SearchResultBox">
                     <div className="PagRow">
 
-                    <StatusButton loading={pagLoading} loadingText="" onPress={offset > 0 | pagLoading ? goBack: () => {}} color={offset > 0 | pagLoading ? "primary": null} className="PagBtn" text={offset > 0 | pagLoading ? "<<": ""}/>
+                    <StatusButton outline loading={pagLoading} loadingText="" onPress={offset > 0 | pagLoading ? goBack: () => {}} color={offset > 0 | pagLoading ? "primary": null} className="PagBtn" text={offset > 0 | pagLoading ? "<<": ""}/>
                     
-                    <StatusButton loading={pagLoading} loadingText="" onPress={users.length > 9 ? advance : () => {}} className="PagBtn" color={users.length > 9 ? "primary" : "light"} text={users.length > 9 ? ">>" : ""} />            
+                    <StatusButton outline loading={pagLoading} loadingText="" onPress={users.length > 9 ? advance : () => {}} className="PagBtn" color={users.length > 9 ? "primary" : "light"} text={users.length > 9 ? ">>" : ""} />            
                     </div>
                     {users.map(user => {
                         
-                        return <UserBox data={user} update={doSearch} admin={user.admin} username={user.username} />
+                        return <UserBox data={user} update={doSearch} admin={user.admin} username={user.username} isBlocked={user.isBlocked}/>
                     })}
                 </Card>
                 

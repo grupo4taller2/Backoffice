@@ -10,7 +10,7 @@ import { getTripData } from "../functions/tripData";
 import "../style/metrics.css";
 
 export default function MetricsView(props){
-    const [activeMetrics, setActiveMetrics] = React.useState(true);
+    const [activeMetrics, setActiveMetrics] = React.useState(1);
     const [retrieved, setRetrieved] = React.useState(false);
     const [loginData, setLoginData] = React.useState([]);
     const [active, setActive] = React.useState([]);
@@ -165,23 +165,26 @@ export default function MetricsView(props){
             <Menu metrics={true} />
                 
                 
-                {retrieved ? (activeMetrics ? <TwoMetrics title1="Total users by login (last 24Hrs)" 
+                {retrieved ? null : <LoadingScreen />}
+                {retrieved && activeMetrics === 1 && <TwoMetrics title1="Total users by login (last 24Hrs)" 
                                     title2="Total active users by user type"
                                     title3="Total new users by signup (last 24Hrs)"
                                     first={loginData}  layout1={user1Layout} type1="Pie" 
                                     second={active} layout2={user2Layout} type2="Line"
-                                    third={newUsers} layout3={user1Layout} type3="Pie"/> : 
-                                <TwoMetrics title3="Distance distribution" 
+                                    third={newUsers} layout3={user1Layout} type3="Pie"/>}
+
+                {retrieved && activeMetrics === 2 && <TwoMetrics title3="Distance distribution" 
                                 title2="Trips price distribution"
                                 title1="Drivers trips frequency"
                                 third={tripsLength}  layout3={trip1Layout} type3="Bar" 
                                 second={priceDist} layout2={trip3Layout} type2="Line"
-                                first={driverFreq} layout1={trip2Layout} type1="Bar" />) : 
-                                <LoadingScreen />
-                }
+                                first={driverFreq} layout1={trip2Layout} type1="Bar" />}
+
+                
                 <Nav className="MetricsNav" pills>
-                    <NavLink href="#" onClick={() => setActiveMetrics(true)} active={activeMetrics}>User metrics</NavLink>
-                    <NavLink href="#" onClick={() => setActiveMetrics(false)} active={!activeMetrics}>Trip metrics</NavLink>
+                    <NavLink href="#" onClick={() => setActiveMetrics(1)} active={activeMetrics === 1}>User metrics</NavLink>
+                    <NavLink href="#" onClick={() => setActiveMetrics(2)} active={activeMetrics === 2}>Trip metrics</NavLink>
+                    <NavLink href="#" onClick={() => setActiveMetrics(3)} active={activeMetrics === 3}>Transaction metrics</NavLink>
                 </Nav>
             
             </>

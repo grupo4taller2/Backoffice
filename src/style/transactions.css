@@ -12,6 +12,7 @@
 
 .TableDiv{
     height: 80%;
+    margin-top: 1%;
 }
 
 .TransactionsPagBtn{
@@ -35,4 +36,8 @@
     left: 1%;
     height: 90%;
     width: 98%;
+}
+
+.IDColumn{
+   width: 25%
 }

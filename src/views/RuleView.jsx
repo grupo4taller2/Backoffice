@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Card, Modal } from "reactstrap";
 import { ActivableInput } from "../components/ActiveableInput";
+import InfoAlert from "../components/InfoAlert";
 import LabeledInput from "../components/LabeledInput";
 import LoadingScreen from "../components/LoadingSpinner";
 import Menu from "../components/Menu";
@@ -36,7 +37,7 @@ export default function Rules(props){
     const [thirtyMinFactor, setTimeFactor] = React.useState(''); //Change to rules
     const [totalTripsTry, setTotalTrips] = React.useState(''); 
     const [minPrice, setminPrice] = React.useState(''); //Change to rules
-    const [minPriceTry, setMinPriceTry] = React.useState(''); 
+    const [mainError, setMainError] = React.useState(false); 
 
     const set_values = (rules) => {
         setkmPrice(rules.c_km);
@@ -50,10 +51,13 @@ export default function Rules(props){
         setErrorMessage(false);
         try{
             const rules = await get_rules(context);
+            
             setMessage('');
+            
             set_values(rules);
         }catch{ 
-            setErrorMessage(true);
+            
+            setMainError(true);
             setMessage("Could not load pricing rules.");
         }
         setGlobalLoading(false);
@@ -67,6 +71,7 @@ export default function Rules(props){
         rules.c_rating = ratingFactor;
         rules.c_min_price = minPrice;
         rules.c_trips_last_30m = thirtyMinFactor;
+        rules.active=true;
 
         return rules;
 
@@ -123,8 +128,8 @@ export default function Rules(props){
                 <Menu rules={true}/>
                     <Card className="RuleSurface">
             {globalLoading ? <LoadingScreen /> : 
-                <>  
-                <SimplePopup isOpen={errorMessage || popUpMessage} toggle={togglePopup} text={message} errorClass={errorMessage ? "ErrorMessage": "Message"}/>
+               !mainError &&  <>  
+                <InfoAlert isOpen={errorMessage || popUpMessage} onDismiss={togglePopup} text={message} isError={errorMessage}/>
                     <div className="HeaderDiv">
                         Rules
                     </div>
@@ -182,7 +187,8 @@ export default function Rules(props){
                         <Button className="TryButton" onClick={rules_trial} outline color="primary">Try trip with rules</Button> 
                     </div>
                 </>
-    }
+            }
+            {mainError && <InfoAlert isError={true} isOpen={mainError} onDismiss={() => setMainError(false)} text="Rules could not be retrieved"/>}
         </Card>
         </>
     )

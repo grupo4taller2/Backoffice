@@ -9,6 +9,7 @@ import { search } from "../functions/net";
 import "../style/search.css";
 import "../style/screenTitle.css";
 import LoadingScreen from "../components/LoadingSpinner";
+import InfoAlert from "../components/InfoAlert";
 
 export default function Search(props){
     const [searchString, setSearch] = React.useState('');
@@ -23,11 +24,14 @@ export default function Search(props){
 
     const [offset, setOffset] = React.useState(0);
 
+    const [mainError, setMainError] = React.useState(false);
+
     const doSearch = async () => {
         try{
             const result = await search(searchString, context, offset);
             setUsers(result);    
         }catch{
+            setMainError(true);
             setUsers([]);
         }
     }
@@ -81,6 +85,8 @@ export default function Search(props){
                 :
                 
                 <Card className="SearchResultBox">
+                    {users.length !== 0 && 
+                    <>
                     <div className="PagRow">
 
                     <StatusButton outline loading={pagLoading} loadingText="" onPress={offset > 0 | pagLoading ? goBack: () => {}} color={offset > 0 | pagLoading ? "primary": null} className="PagBtn" text={offset > 0 | pagLoading ? "<<": ""}/>
@@ -91,6 +97,9 @@ export default function Search(props){
                         
                         return <UserBox data={user} update={doSearch} admin={user.admin} username={user.username} isBlocked={user.isBlocked}/>
                     })}
+                    </>
+                }
+                    {users.length === 0 && offset === 0 && <InfoAlert isError={true} text="No users found" onDismiss={() => setMainError(false)} isOpen={mainError}/>}
                 </Card>
                 
             }

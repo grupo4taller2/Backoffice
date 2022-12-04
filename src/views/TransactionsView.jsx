@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Table } from "reactstrap";
+import InfoAlert from "../components/InfoAlert";
 import LoadingScreen from "../components/LoadingSpinner";
 import Menu from "../components/Menu";
 import StatusButton from "../components/StatusButton";
@@ -14,6 +15,10 @@ export default function TransactionsView(props){
     const [transactions, setTransactions] = React.useState([]);
     const [transactionsLoad, setTransactionsLoad] = React.useState(true);
 
+    const [mainError, setMainError] = React.useState(false);
+
+    const [someError, setSomeError] = React.useState(false);
+
     const context = useUserContext();
 
     const getTransactions = async () => {
@@ -21,9 +26,11 @@ export default function TransactionsView(props){
         try{
             const data = await loadTransactions(context, offset);
             setTransactions(data)
-            console.log(data)
+            setSomeError(false);
+            
         }catch{
-            //Nada
+            setMainError(true);
+            setSomeError(true);
         }
 
         setTransactionsLoad(false);
@@ -50,6 +57,8 @@ export default function TransactionsView(props){
                 <LoadingScreen /> 
                 :
                 <Card className="ResultsBoxTransactions">
+                    {!mainError && !someError && 
+                    <>
                     <div className="PagRowTransactions">
 
                     <StatusButton  outline className="TransactionsPagBtn" loadingText="" onPress={offset > 0 | pagLoading ? goBack: () => {}} color={offset > 0 | pagLoading ? "dark": null} text={offset > 0 | pagLoading ? "<<": ""}/>
@@ -77,7 +86,9 @@ export default function TransactionsView(props){
                         }
                     </tbody>
                     </Table>
-                    
+                    </>}
+                    {mainError && <InfoAlert isError={mainError} isOpen={mainError} onDismiss={() => {setMainError(false)}}
+                                            text="Could not retrieve transactions" />}
                 </Card>}
         </>
 }

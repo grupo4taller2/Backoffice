@@ -20,7 +20,7 @@ export default function MetricsView(props){
     const [newUsers, setNewUsers] = React.useState([]);
     const [tripsLength, setTripsLength] = React.useState([]);
     const [driverFreq, setDriverFreq] = React.useState([]);
-    const [priceDist, setPriceDist] = React.useState([]);
+    const [userFreq, setuserFreq] = React.useState([]);
     const [paymentsVsWithdraws, setPayVsWith] = React.useState([]);
 
     const [mainError, setMainError] = React.useState(false);
@@ -34,7 +34,7 @@ export default function MetricsView(props){
 
         let trip_metrics = await getTripData();
         let transaction_metrics = await getTransactionData();
-        console.log(transaction_metrics)
+        console.log(trip_metrics);
 
         const sumed_logins = {
             "Federated": 0,
@@ -87,7 +87,7 @@ export default function MetricsView(props){
         setRetrieved(true);
         setDriverFreq(trip_metrics.driverTripsFreq);
         setTripsLength(trip_metrics.byDistance);
-        setPriceDist(trip_metrics.priceDist);
+        setuserFreq(trip_metrics.userTripFreq);
         setPayVsWith([
             {
                 name: "Payments (kETH)",
@@ -139,7 +139,7 @@ export default function MetricsView(props){
         labels: {
             x: "Km",
             xKey: "length",
-            y: "%"
+            y: "Amount"
         },
 
         lines: [
@@ -170,13 +170,13 @@ export default function MetricsView(props){
     const trip3Layout = {
         legend: true,
         labels: {
-            x: "Keth",
-            xKey: "value",
+            x: "Trips",
+            xKey: "trips",
             y: "Users"
         },
         lines: [
             {
-                dataKey: "quantile",
+                dataKey: "users",
                 type: "monotone",
                 stroke: "#1f77b4",
             }
@@ -206,11 +206,11 @@ export default function MetricsView(props){
                                     second={active} layout2={user2Layout} type2="Line"
                                     third={newUsers} layout3={user1Layout} type3="Pie"/>}
 
-                {retrieved && !mainError && activeMetrics === 2 && <TwoMetrics title3="Distance distribution" 
-                                title2="Trips price distribution"
+                {retrieved && !mainError && activeMetrics === 2 && <TwoMetrics title3="Trips per distance range" 
+                                title2="User trips frequency"
                                 title1="Drivers trips frequency"
                                 third={tripsLength}  layout3={trip1Layout} type3="Bar" 
-                                second={priceDist} layout2={trip3Layout} type2="Line"
+                                second={userFreq} layout2={trip3Layout} type2="Bar"
                                 first={driverFreq} layout1={trip2Layout} type1="Bar" />}
 
                 {retrieved && activeMetrics === 3 && !mainError && 

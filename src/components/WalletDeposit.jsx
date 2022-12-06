@@ -1,8 +1,9 @@
 import React from "react";
-import { Badge, Button, CloseButton, Input, Modal, ModalHeader } from "reactstrap";
+import { Alert, Badge, Button, CloseButton, Input, Modal, ModalHeader, UncontrolledAlert } from "reactstrap";
 import { useUserContext } from "../config/ctx";
 import { deposit, get_balance, get_contract_balance } from "../functions/net";
 import "../style/userCard.css"
+import InfoAlert from "./InfoAlert";
 import LabeledInput from "./LabeledInput";
 import StatusButton from "./StatusButton";
 
@@ -22,6 +23,9 @@ export default function WalletDeposit(props){
     const [error, setError] = React.useState(false);
 
     const [onConfirmation, setConfirmation] = React.useState(false);
+    const [succesful, setSuccesful] = React.useState(false);
+    const [done, setDone] = React.useState(false);
+    const [alertText, setAlertText] = React.useState('');
 
     const toggle = () => {
         setToggled(!toggled)
@@ -53,9 +57,6 @@ export default function WalletDeposit(props){
         }
     }
 
-    const dismissError = () => {
-        setError(false)
-    }
 
     const confirmDeposit = async () => {
         setLoading(true);
@@ -63,11 +64,16 @@ export default function WalletDeposit(props){
             await deposit(context, walletAddress, depositAmount);
             await loadBalance();
             await loadTotalBalance();
+            setSuccesful(true);
+            setAlertText("Succesful transaction");
         }catch{
             setError(true);
+            setSuccesful(false);
+            setAlertText("The transaction failed");
         }
         setLoading(false);
         setConfirmation(false);
+        setDone(true);
     }
 
     React.useEffect(() => {
@@ -81,6 +87,9 @@ export default function WalletDeposit(props){
                     <div className="CloseButtonDiv">
                         <CloseButton onClick={toggle}/>
                     </div>
+                        <InfoAlert isError={!succesful} 
+                                    isOpen={done} onDismiss={() => {setDone(false)}} 
+                                    text={alertText}/>
                     <div className="ModHeadDiv">
                         <ModalHeader>
                             User: {props.username}
@@ -89,19 +98,15 @@ export default function WalletDeposit(props){
                     </div>
                     <Badge color="dark" className="AddressBadge"> Address: {walletAddress} </Badge>
                     <Badge color="dark" className="AddressBadge">Max deposit amount: {maxDeposit} ETH</Badge>
-                    {error ? 
-                    <>
-                    <p className="ErrorTextMessage">Could not deposit: {depositAmount} to user</p>
-                    <Button className="Dismiss" color="danger" onClick={dismissError}>Ok</Button>
-                    </>
-                    : 
-                    null}
+                    
+                    
                     <div className="DepositDiv">
                         <StatusButton loading={loading} loadingText="" className="DepositButton" onPress={changeConfirmation} color={onConfirmation ? "danger" : "primary"} outline text={onConfirmation ? "Cancel" : "Deposit"} />
                         <LabeledInput onChange={setDepositAmount} inputClass="DepositInput" name="Amount" notNamed/>
                         {onConfirmation ? <StatusButton onPress={confirmDeposit} loadingText="" loading={loading} className="ConfirmationButton" color="success" outline text="Confirm"/> : null}
                     </div>
                 </Modal>
+                
             </>;
 
 }

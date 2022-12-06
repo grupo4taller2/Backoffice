@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Table } from "reactstrap";
+import { Badge, Card, Pagination, PaginationItem, PaginationLink, Table } from "reactstrap";
+import InfoAlert from "../components/InfoAlert";
 import LoadingScreen from "../components/LoadingSpinner";
 import Menu from "../components/Menu";
 import StatusButton from "../components/StatusButton";
@@ -14,16 +15,29 @@ export default function TransactionsView(props){
     const [transactions, setTransactions] = React.useState([]);
     const [transactionsLoad, setTransactionsLoad] = React.useState(true);
 
+    const [actualPage, setActualPage] = React.useState(0);
+    const [totalPages, setTotalPages] = React.useState(0);
+
+    const [mainError, setMainError] = React.useState(false);
+
+    const [someError, setSomeError] = React.useState(false);
+
     const context = useUserContext();
 
-    const getTransactions = async () => {
+    const getTransactions = async (offset) => {
 
         try{
+            console.log(offset);
             const data = await loadTransactions(context, offset);
-            setTransactions(data)
-            console.log(data)
+            
+            setActualPage(data.actual_page);
+            setTotalPages(data.total_pages);
+            setTransactions(data.transactions);
+            setSomeError(false);
+            
         }catch{
-            //Nada
+            setMainError(true);
+            setSomeError(true);
         }
 
         setTransactionsLoad(false);
@@ -33,16 +47,22 @@ export default function TransactionsView(props){
     const advance = () => {
         setTransactionsLoad(true);
         setOffset(offset + 10);
-        getTransactions();
+        getTransactions(offset + 10);
     }
 
     const goBack = () => {
         setTransactionsLoad(true);
         setOffset(offset - 10);
-        getTransactions();
+        getTransactions(offset - 10);
     }
 
-    React.useEffect(() => {getTransactions()}, [])
+    const setAndSearch = (newOffset) => {
+        setTransactionsLoad(true);
+        setOffset(newOffset);
+        getTransactions(newOffset);
+    }
+
+    React.useEffect(() => {getTransactions(offset)}, [])
 
     return <>
             <Menu transactions={true} />
@@ -50,16 +70,28 @@ export default function TransactionsView(props){
                 <LoadingScreen /> 
                 :
                 <Card className="ResultsBoxTransactions">
+                    {!mainError && !someError && 
+                    <>
                     <div className="PagRowTransactions">
 
-                    <StatusButton  outline className="TransactionsPagBtn" loadingText="" onPress={offset > 0 | pagLoading ? goBack: () => {}} color={offset > 0 | pagLoading ? "dark": null} text={offset > 0 | pagLoading ? "<<": ""}/>
-                    
-                    <StatusButton  outline className="TransactionsPagBtn"  loadingText="" onPress={transactions.length > 9 ? advance : () => {}}  color={transactions.length > 9 ? "dark" : null} text={transactions.length > 9 ? ">>" : ""} />            
+                    <StatusButton  outline className="TransactionsPagBtn" loadingText="" onPress={offset > 0 | pagLoading ? goBack: () => {}} color={offset > 0 | pagLoading ? "primary": null} text={offset > 0 | pagLoading ? "<<": ""}/>
+                    <Pagination size="lg" color="dark">
+                        {(() => {
+                            let pages = [];
+                            for (let i = 1; i <= totalPages; i++){
+                                pages.push(<PaginationItem active={i === actualPage}>
+                                    <PaginationLink onClick={() => setAndSearch((i - 1) * 10)} color="dark">{i}</PaginationLink>
+                                    </PaginationItem>)
+                            }
+                            return pages
+                        })()}
+                    </Pagination>
+                    <StatusButton  outline className="TransactionsPagBtn"  loadingText="" onPress={transactions.length > 9 ? advance : () => {}}  color={transactions.length > 9 ? "primary" : null} text={transactions.length > 9 ? ">>" : ""} />            
                     </div>
                     <Table className="TableDiv" bordered striped>
                     <thead>
                         <tr>
-                            <th>Number</th>
+                            <th>Trip id</th>
                             <th>Rider</th>
                             <th>Amount (ETH)</th>
                             <th>Driver</th>
@@ -68,7 +100,7 @@ export default function TransactionsView(props){
                     <tbody>
                     {transactions.map((value, index) => {
                         return  <tr>
-                                    <td scope="row">{index + offset + 1}</td>
+                                    <td className="IDColumn">{value.tripID}</td>
                                     <td>{value.riderUsername}</td>
                                     <td>{value.amount}</td>
                                     <td>{value.driverUsername}</td>
@@ -77,7 +109,9 @@ export default function TransactionsView(props){
                         }
                     </tbody>
                     </Table>
-                    
+                    </>}
+                    {mainError && <InfoAlert isError={mainError} isOpen={mainError} onDismiss={() => {setMainError(false)}}
+                                            text="Could not retrieve transactions" />}
                 </Card>}
         </>
 }

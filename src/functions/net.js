@@ -41,7 +41,7 @@ export async function search(searchString, context, offset = 0, limit = 10){
                 offset: offset,
                 limit: limit}})).data
 
-    const result = users.map(async value => {
+    const result = users.users.map(async value => {
         try{
             await axios.get("https://g4-fiuber.herokuapp.com/api/v1/admins/" + value.username, token)
             value.admin = true;
@@ -53,7 +53,11 @@ export async function search(searchString, context, offset = 0, limit = 10){
         return value;
     });
 
-    return await Promise.all(result)
+    return {
+        actual_page: users.actual_page,
+        total_pages: users.total_pages,
+        users: await Promise.all(result)
+    }
 
 }
 

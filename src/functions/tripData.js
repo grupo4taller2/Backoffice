@@ -6,14 +6,23 @@ export async function getTripData(){
 
     const data = await (await axios.get(`https://g4-fiuber.herokuapp.com/api/v1/metrics/trips/${minutes}`)).data
 
-    const frequencys = {};
+    const frequencys = {
+        "<5": 0,
+        "<10": 0,
+        ">10": 0
+    };
 
     data.map(value => {
         const km = parseInt((parseInt(value.distance) / 1000).toString().split('.').at(0))
-        if (!frequencys[km]){
-            frequencys[km] = 0;
+        if (km < 5){
+            frequencys["<5"]++;
         }
-        frequencys[km]++;
+        if (km >= 5 && km < 10){
+            frequencys["<10"]++;
+        }
+        else {
+            frequencys[">10"]++;
+        }
 
     }).sort();
     
@@ -22,14 +31,14 @@ export async function getTripData(){
         return {
             length: value,
 
-            value: (frequencys[value] / (count)) * 100
+            value: frequencys[value]
         };
     })
     
     return {
         byDistance: processed,
         driverTripsFreq: driverByTrips(data),
-        priceDist: priceDistribution(data)
+        userTripFreq: userFrequency(data)
     }
 }
 
@@ -45,23 +54,35 @@ function driverByTrips(data){
 
         processed[value.driver_username]++;
     });
-
+    
     const trips = Object.values(processed);
 
-    const frequency = {};
-
+    const frequency = {
+        "<3": 0,
+        "<9": 0,
+        ">9": 0
+    };
+    
     trips.map((value) => {
-        if (!frequency[value]){
-            frequency[value] = 0;
+        
+        if (value < 3){
+            
+            frequency["<3"]++;
+            return
+        }
+        if (value < 9){
+            frequency["<9"]++;
+            
+        }else{
+            frequency[">9"]++;
         }
 
-        frequency[value]++;
     })
 
     return Object.keys(frequency).map(value => {
         return {
             drivers: frequency[value],
-            trips: parseInt(value)
+            trips: value
         }
     })
 }
@@ -82,3 +103,48 @@ function priceDistribution(data){
                 quantile: (index + 1) / count}
     })
 }   
+
+function userFrequency(data){
+
+    const processed = {};
+
+    data.map((value) => {
+
+        if (!processed[value.user_username]){
+            processed[value.user_username] = 0;
+        }
+
+        processed[value.user_username]++;
+    });
+    
+    const trips = Object.values(processed);
+
+    const frequency = {
+        "<3": 0,
+        "<9": 0,
+        ">9": 0
+    };
+    
+    trips.map((value) => {
+        
+        if (value < 3){
+            
+            frequency["<3"]++;
+            return
+        }
+        if (value < 9){
+            frequency["<9"]++;
+            
+        }else{
+            frequency[">9"]++;
+        }
+
+    })
+
+    return Object.keys(frequency).map(value => {
+        return {
+            users: frequency[value],
+            trips: value
+        }
+    })
+}

@@ -3,6 +3,7 @@ import { Button, Card, Modal, ModalFooter, ModalHeader } from "reactstrap";
 import { useUserContext } from "../config/ctx";
 import { registerAdmin } from "../functions/net";
 import "../style/search.css"
+import InfoAlert from "./InfoAlert";
 import InfoUserBox from "./InfoUserBox";
 import StatusButton from "./StatusButton";
 import WalletDeposit from "./WalletDeposit";
@@ -14,33 +15,49 @@ export default function UserBox(props){
 
     const [blockedStatus, setBlockedStatus] = React.useState(props.isBlocked);
 
+    const [alertText, setAlertText] = React.useState('');
+    const [alert, setAlert] = React.useState(false);
+    const [alertError, setAlertError] = React.useState(false);
+
     const toggle = props.admin ? () => {} : () => {setRegister(!register)};
 
     const toggleBlock = () => {setChangeBlockStatus(!changeBlockStatus)};
 
     const context = useUserContext();
 
+    const toggleAlert = () => {
+        setAlert(false);
+        setAlertError(false);
+        setRegister(false);
+        setChangeBlockStatus(false);
+    }
+
     const as_admin = props.admin ? () => {} : async () => {
         setLoading(true);
         try{
             await registerAdmin(props.username, context);
-            await props.update();
+            setAlertText("The user was registered as admin");
+            props.update();
         }catch{
             //Set an error
+            setAlertError(true);
+            setAlertText("Ocurrio un error al tratar de registrar al usuario como administrador")
         }
 
         setLoading(false);
-        toggle();
+        setAlert(true);
     };
 
     const changeBlockedStatus = async () => {
         setLoading(true)
         try{
             //Await the blocking or unblocking of a user
-            //Hacer props.update()
+            setAlertText("The user was blocked");
         }catch{
-            //Mensaje de error
+            setAlertText("There was a problem blocking the user");
+            setAlertError(true);
         }
+        setAlert(true)
         setLoading(false)
     }
 
@@ -55,6 +72,7 @@ export default function UserBox(props){
                         <Button className="BlockBtn" color="success" outline onClick={toggleBlock}>UnBlock User</Button>
                         )}
                         <Modal isOpen={register || changeBlockStatus} toggle={register ? toggle : toggleBlock}>
+                            {!alert && <>
                             <ModalHeader>
                                 {  register ? 
                                 "Register " + props.username + " as admin ?" 
@@ -67,6 +85,14 @@ export default function UserBox(props){
                                     Cancel
                                 </Button>
                             </ModalFooter>
+                            </>}
+                            {
+                                alert && 
+                                <ModalHeader>
+                                <InfoAlert isOpen={alert} isError={alertError} onDismiss={toggleAlert} 
+                                            text={alertText} noClass={true}/>
+                                </ModalHeader>
+                            }
                         </Modal>
                         <p className="UsernameTag">{props.username}</p>
                         <p className="UserTypeTag">{props.admin ? "Admin" : "Regular user"}</p>

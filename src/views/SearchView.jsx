@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, CardTitle, Input, Modal } from "reactstrap";
+import { Button, Card, CardTitle, Input, Modal, Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import LabeledInput from "../components/LabeledInput";
 import Menu from "../components/Menu";
 import StatusButton from "../components/StatusButton";
@@ -26,10 +26,17 @@ export default function Search(props){
 
     const [mainError, setMainError] = React.useState(false);
 
-    const doSearch = async () => {
+    const [actualPage, setActualPage] = React.useState(0);
+    const [totalPages, setTotalPages] = React.useState(0);
+
+    const doSearch = async (someOffset) => {
         try{
-            const result = await search(searchString, context, offset);
-            setUsers(result);    
+            const result = await search(searchString, context, someOffset);
+            
+            setUsers(result.users);
+            setActualPage(result.actual_page);
+            console.log(result.actual_page);
+            setTotalPages(result.total_pages);    
         }catch{
             setMainError(true);
             setUsers([]);
@@ -41,7 +48,7 @@ export default function Search(props){
         setOffset(0);
         try{
             setUsers([]);
-            await doSearch();
+            await doSearch(0);
             setLoading(false);
         }catch{
             setLoading(false);
@@ -50,11 +57,10 @@ export default function Search(props){
         
     }
 
-    const moveOffset = async (by) => {
-        setPagLoading(true);
-        setUsers([]);
-        await doSearch();
-        setPagLoading(false);
+    const setAndSearch = async (newOffset) => {
+        
+        setOffset(newOffset)
+
     }
 
     const advance = () => {
@@ -68,12 +74,13 @@ export default function Search(props){
     React.useEffect(() => {
         const func = async () => {
             setPagLoading(true);
-            await doSearch();
+            await doSearch(offset);
             setPagLoading(false);
         }
         func()
     }, [offset])
 
+    
     return (
             <>
             <Menu search={true}/>
@@ -90,7 +97,17 @@ export default function Search(props){
                     <div className="PagRow">
 
                     <StatusButton outline loading={pagLoading} loadingText="" onPress={offset > 0 | pagLoading ? goBack: () => {}} color={offset > 0 | pagLoading ? "primary": null} className="PagBtn" text={offset > 0 | pagLoading ? "<<": ""}/>
-                    
+                    <Pagination size="lg" color="dark">
+                        {(() => {
+                            let pages = [];
+                            for (let i = 1; i <= totalPages; i++){
+                                pages.push(<PaginationItem active={i === actualPage}>
+                                    <PaginationLink onClick={() => setAndSearch((i - 1) * 10)} color="dark">{i}</PaginationLink>
+                                    </PaginationItem>)
+                            }
+                            return pages
+                        })()}
+                    </Pagination> 
                     <StatusButton outline loading={pagLoading} loadingText="" onPress={users.length > 9 ? advance : () => {}} className="PagBtn" color={users.length > 9 ? "primary" : "light"} text={users.length > 9 ? ">>" : ""} />            
                     </div>
                     {users.map(user => {

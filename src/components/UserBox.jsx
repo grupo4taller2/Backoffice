@@ -66,11 +66,11 @@ export default function UserBox(props){
                         <InfoUserBox data={props.data}/>
                         <WalletDeposit username={props.username}/>
                         {!props.admin && <Button className="AdminBtn" color="primary" outline onClick={toggle}>Make admin</Button>}
-                        {!props.admin && (!props.isBlocked ? 
+                        {/*!props.admin && (!props.isBlocked ? 
                         <Button className="BlockBtn" color="danger" outline onClick={toggleBlock}>Block User</Button>
                         :
                         <Button className="BlockBtn" color="success" outline onClick={toggleBlock}>UnBlock User</Button>
-                        )}
+                        )*/}
                         <Modal isOpen={register || changeBlockStatus} toggle={register ? toggle : toggleBlock}>
                             {!alert && <>
                             <ModalHeader>

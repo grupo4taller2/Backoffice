@@ -30,6 +30,14 @@ export async function registerAdmin(newAdmin, context){
 
 }
 
+export async function signInWithGoogle(response){
+
+    const token = getHeaderFromCredential(response);
+
+    const username = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/admins/" + response.user.email, token)).data
+    
+    return {credential: response, userInfo: username};
+}
 
 export async function search(searchString, context, offset = 0, limit = 10){
 

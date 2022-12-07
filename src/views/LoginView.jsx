@@ -1,12 +1,14 @@
 import "../style/login.css"
-import { Card, Form, FormGroup, Input, Label, Modal } from "reactstrap"
+import { Badge, Card, Form, FormGroup, Input, Label, Modal } from "reactstrap"
 import StatusButton from "../components/StatusButton";
 import React from "react";
 import LabeledInput from "../components/LabeledInput";
 import { checkValidMail, checkValidPassword, checkValidUsername } from "../functions/checks";
-import { login } from "../functions/net";
+import { login, signInWithGoogle } from "../functions/net";
 import { useUserContext } from "../config/ctx";
 import { useNavigate } from "react-router-dom";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../config/firebase";
 
 const logo = require("../images/logoWithName.png");
 const INVALIDINPUT = "Please provide a valid email and password";
@@ -58,6 +60,25 @@ export default function LoginView(props){
         }
     }
     
+    const tryLoginGoogle = async () => {
+        setLoading(true);
+        try{
+            
+            const response = await signInWithPopup(getAuth(), googleProvider);
+            const credentials = await signInWithGoogle(response)
+            setLoading(false);
+            if (!credentials.userInfo){
+                throw "No user found"
+            }
+            signIn(credentials);
+            navigate('/search');
+        }catch (error){
+            console.log(error);
+            setError("That user is not an administrator");  
+        }
+        setLoading(false);
+    }
+
     return (
         
         <Card className="SurfaceLogin">
@@ -74,7 +95,7 @@ export default function LoginView(props){
                                     invalid={failedInput}/>
                 </FormGroup>
             </Form>
-            
+            <Badge color="primary" onClick={tryLoginGoogle}>Sign in with google</Badge>
             <StatusButton className="LoginBtn" color="primary" text="Login" loading={loading} 
                             loadingText="Login in" onPress={tryLogin}/>
 

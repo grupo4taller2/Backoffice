@@ -6,6 +6,7 @@ import Menu from "../components/Menu";
 import MetricCard from "../components/MetricCard";
 
 import TwoMetrics from "../components/TwoMetrics";
+import { useUserContext } from "../config/ctx";
 import { getLast24HoursFrom } from "../functions/data";
 import { getTransactionData } from "../functions/transactionData";
 import { getTripData } from "../functions/tripData";
@@ -25,15 +26,15 @@ export default function MetricsView(props){
 
     const [mainError, setMainError] = React.useState(false);
 
-
+    const context = useUserContext();
 
     const retrieve = async () => {
         let login_data = await getLast24HoursFrom("logins", {"Federated": 0, "Email": 0});
         let creation_data = await getLast24HoursFrom("signup", {"Federated": 0, "Email": 0});
         let active_data = await getLast24HoursFrom("active", {"Driver": 0, "Rider": 0});
 
-        let trip_metrics = await getTripData();
-        let transaction_metrics = await getTransactionData();
+        let trip_metrics = await getTripData(context);
+        let transaction_metrics = await getTransactionData(context);
         console.log(trip_metrics);
 
         const sumed_logins = {

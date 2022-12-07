@@ -1,8 +1,11 @@
 import axios from "axios";
+import { getHeader } from "./net";
 
-export async function getTransactionData(){
+export async function getTransactionData(context){
 
-    const data = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/payments/transactions/24")).data;
+    const token = getHeader(context);
+    
+    const data = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/payments/transactions/24", token)).data;
 
     return {
         withdrawsVsPayments: paymentsVsWithdraws(data),

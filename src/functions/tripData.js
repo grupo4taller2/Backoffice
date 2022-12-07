@@ -1,10 +1,13 @@
 import axios from "axios";
+import { getHeader } from "./net";
 
-export async function getTripData(){
+export async function getTripData(context){
 
     const minutes = 90000;
 
-    const data = await (await axios.get(`https://g4-fiuber.herokuapp.com/api/v1/metrics/trips/${minutes}`)).data
+    const token = getHeader(context);
+
+    const data = await (await axios.get(`https://g4-fiuber.herokuapp.com/api/v1/metrics/trips/${minutes}`, token)).data
 
     const frequencys = {
         "<5": 0,

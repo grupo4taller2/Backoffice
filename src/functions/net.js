@@ -131,7 +131,7 @@ export async function deposit(context, userWallet, amount){
 
 }
 
-function getHeader(context){
+export function getHeader(context){
     return context.userState.user ? getToken(context.userState.user.stsTokenManager.accessToken) : null;
 }
 

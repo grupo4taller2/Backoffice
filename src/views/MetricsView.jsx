@@ -35,7 +35,7 @@ export default function MetricsView(props){
 
         let trip_metrics = await getTripData(context);
         let transaction_metrics = await getTransactionData(context);
-        console.log(trip_metrics);
+        
 
         const sumed_logins = {
             "Federated": 0,
@@ -106,7 +106,7 @@ export default function MetricsView(props){
             await retrieve()
         }catch{
             setMainError(true);
-            setRetrieved(false);
+            setRetrieved(true);
         }
     }
     const user1Layout = {
@@ -218,8 +218,11 @@ export default function MetricsView(props){
                 <div className="OneMetricDiv">
                 <MetricCard title="Payments Vs Withdrawals" layout={transactions1Layout} data={paymentsVsWithdraws} type="Pie" />
                 </div>}
-                {mainError && <InfoAlert isError={mainError} isOpen={mainError} onDismiss={() => setMainError(false)} 
-                                            text="Could not retrieve metrics" />}
+                {mainError && 
+                <Card className="SearchResultBox">
+                <InfoAlert isError={mainError} isOpen={mainError} onDismiss={() => setMainError(false)} 
+                                            text="Could not retrieve metrics" />
+                </Card>}
                 
                 {!mainError && <Nav className="MetricsNav" pills>
                     <NavLink href="#" onClick={() => setActiveMetrics(1)} active={activeMetrics === 1}>User metrics</NavLink>

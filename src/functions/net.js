@@ -81,9 +81,9 @@ export async function loadTransactions(context, offset, limit=10) {
 export async function get_rules(context){
     const token = getHeader(context);
 
-    const rules = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/pricing/rules", token)).data
+    const rules = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/pricing/rules/DEFAULT_RULE", token)).data
 
-    return rules[0];
+    return rules;
 }
 
 export async function patch_rules(new_rules, context){

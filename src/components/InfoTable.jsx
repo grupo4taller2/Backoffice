@@ -1,5 +1,5 @@
 import { Table } from "reactstrap";
-
+import "../style/userInfoTable.css"
 export default function InfoTable(props){
 
     /*
@@ -11,7 +11,7 @@ export default function InfoTable(props){
 
     console.log(headers);
 
-    return <Table>
+    return <Table className="UserInfoTable" striped bordered>
         <thead>
             <tr>
             {headers.map(value => {

@@ -1,11 +1,12 @@
 import React from "react";
-import { Alert, Badge, Button, CloseButton, Input, Modal, ModalHeader, UncontrolledAlert } from "reactstrap";
+import { Alert, Badge, Button, CloseButton, Input, Modal, ModalHeader, Table, UncontrolledAlert } from "reactstrap";
 import { useUserContext } from "../config/ctx";
 import { deposit, get_balance, get_contract_balance } from "../functions/net";
 import "../style/userCard.css"
 import InfoAlert from "./InfoAlert";
 import LabeledInput from "./LabeledInput";
 import StatusButton from "./StatusButton";
+import "../style/walletTable.css"
 
 
 export default function WalletDeposit(props){
@@ -89,15 +90,38 @@ export default function WalletDeposit(props){
                     </div>
                         <InfoAlert isError={!succesful} 
                                     isOpen={done} onDismiss={() => {setDone(false)}} 
-                                    text={alertText}/>
+                                    text={alertText}
+                                    />
                     <div className="ModHeadDiv">
                         <ModalHeader>
                             User: {props.username}
                         </ModalHeader>
-                        <Badge className="BalanceBadge" color="primary" pill> Balance: {balance} ETH </Badge>
+                        
                     </div>
-                    <Badge color="dark" className="AddressBadge"> Address: {walletAddress} </Badge>
-                    <Badge color="dark" className="AddressBadge">Max deposit amount: {maxDeposit} ETH</Badge>
+                    <Badge color="dark" className="AddressBadge" pill>Max deposit amount: {maxDeposit} ETH</Badge>
+                    <Table className="WalletTable" bordered striped>
+                        <thead>
+                            <tr>
+                                <th className="ColumnStyle">
+                                    Address
+                                </th>
+                                <th className="ColumnStyle">
+                                    Balance (ETH)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {walletAddress}
+                                </td>
+                                <td>
+                                    {balance}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                    
                     
                     
                     <div className="DepositDiv">

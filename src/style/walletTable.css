@@ -1,0 +1,16 @@
+.WalletTable{
+
+    align-self: center;
+    justify-self: center;
+
+    font-size: large;
+    font-weight: bolder;
+    width: 80%
+
+}
+
+.ColumnStyle{
+
+    width: 50%
+
+}

@@ -32,13 +32,16 @@ export default function Search(props){
     const doSearch = async (someOffset) => {
         try{
             const result = await search(searchString, context, someOffset);
-            
+            if (result.users.length === 0){
+                throw "No users found"
+            }
             setUsers(result.users);
             setActualPage(result.actual_page);
-            console.log(result.actual_page);
+            
             setTotalPages(result.total_pages);    
         }catch{
             setMainError(true);
+            
             setUsers([]);
         }
     }
@@ -116,7 +119,7 @@ export default function Search(props){
                     })}
                     </>
                 }
-                    {users.length === 0 && offset === 0 && <InfoAlert isError={true} text="No users found" onDismiss={() => setMainError(false)} isOpen={mainError}/>}
+                    {mainError && <InfoAlert isError={true} text="No users found" onDismiss={() => setMainError(false)} isOpen={mainError}/>}
                 </Card>
                 
             }

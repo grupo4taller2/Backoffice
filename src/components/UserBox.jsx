@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Modal, ModalFooter, ModalHeader } from "reactstrap";
+import { Button, Card, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { useUserContext } from "../config/ctx";
 import { registerAdmin } from "../functions/net";
 import "../style/search.css"
@@ -87,11 +87,17 @@ export default function UserBox(props){
                             </ModalFooter>
                             </>}
                             {
-                                alert && 
-                                <ModalHeader>
-                                <InfoAlert isOpen={alert} isError={alertError} onDismiss={toggleAlert} 
-                                            text={alertText} noClass={true}/>
+                                alert &&
+                                <> 
+                                <ModalHeader toggle={() => {setRegister(!register)}}>
+                                
                                 </ModalHeader>
+                                <ModalBody>
+                                <InfoAlert isOpen={alert} isError={alertError} onDismiss={toggleAlert} 
+                                            text={alertText} noClass={true} untoggable={true}/>
+                                </ModalBody>
+                                
+                                </>
                             }
                         </Modal>
                         <p className="UsernameTag">{props.username}</p>

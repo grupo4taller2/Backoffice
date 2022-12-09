@@ -7,7 +7,7 @@ import { checkValidMail, checkValidPassword, checkValidUsername } from "../funct
 import { login, signInWithGoogle } from "../functions/net";
 import { useUserContext } from "../config/ctx";
 import { useNavigate } from "react-router-dom";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase";
 
 const logo = require("../images/logoWithName.png");
@@ -64,7 +64,7 @@ export default function LoginView(props){
         setLoading(true);
         try{
             
-            const response = await signInWithPopup(getAuth(), googleProvider);
+            const response = await signInWithRedirect(getAuth(), googleProvider);
             const credentials = await signInWithGoogle(response)
             setLoading(false);
             if (!credentials.userInfo){

@@ -1,14 +1,18 @@
 export const MOCKING = true;
 
-export const loginMockData = {
-    "Federated": 345,
-    "Email and password": 475
-};
+export const loginMockData = [{
+    value: {
+        "Federated": 345,
+        "Email": 475
+    }
+}];
 
-export const signupMockData = {
-    "Federated": 125,
-    "Email and password": 89
-};
+export const signupMockData = [{
+    value: {
+        "Federated": 125,
+        "Email": 89
+    }
+}];
 
 export const transactionMockData = {
     "payments": 25,
@@ -195,20 +199,48 @@ export function getMockedData(mocked){
     }
 }
 
-export const  DriverTripMockedData = {
-    "<3": 120,
-    "<9": 89,
-    ">9": 150
-};
+export const  DriverTripMockedData = [
+    {
+        drivers: 120,
+        trips: "<3"
+    },
+    {
+        drivers: 89,
+        trips: "<9"
+    },
+    {
+        drivers: 150,
+        trips: ">9"
+    }
 
-export const  RiderTripMockedData = {
-    "<3": 200,
-    "<9": 100,
-    ">9": 49
-};
+];
 
-export const  TripDistanceMockedData = {
-    "<5": 100,
-    "<10": 150,
-    ">10": 99
-};
+export const  RiderTripMockedData = [
+    {
+        users: 200,
+        trips: "<3"
+    },
+    {
+        users: 100,
+        trips: "<9"
+    },
+    {
+        users: 49,
+        trips: ">9"
+    }
+];
+
+export const  TripDistanceMockedData = [
+    {
+        length: "<5",
+        value: 100
+    },
+    {
+        length: "<10",
+        value: 150
+    },
+    {
+        length: ">10",
+        value: 99
+    }
+];

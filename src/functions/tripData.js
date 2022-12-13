@@ -1,4 +1,5 @@
 import axios from "axios";
+import { DriverTripMockedData, MOCKING, RiderTripMockedData, TripDistanceMockedData } from "../config/demoData";
 import { getHeader } from "./net";
 
 export async function getTripData(context){
@@ -39,9 +40,9 @@ export async function getTripData(context){
     })
     
     return {
-        byDistance: processed,
-        driverTripsFreq: driverByTrips(data),
-        userTripFreq: userFrequency(data)
+        byDistance: MOCKING ? TripDistanceMockedData : processed,
+        driverTripsFreq: MOCKING ? DriverTripMockedData : driverByTrips(data),
+        userTripFreq: MOCKING ? RiderTripMockedData : userFrequency(data)
     }
 }
 

@@ -64,7 +64,7 @@ export default function LoginView(props){
         setLoading(true);
         try{
             
-            const response = await signInWithRedirect(getAuth(), googleProvider);
+            const response = await signInWithPopup(getAuth(), googleProvider);
             const credentials = await signInWithGoogle(response)
             setLoading(false);
             if (!credentials.userInfo){

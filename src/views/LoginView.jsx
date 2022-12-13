@@ -38,7 +38,7 @@ export default function LoginView(props){
     };
 
     const tryLogin = async () => {
-        setLoading(true); //TODO: cambiarlo para que funcione como debe
+        setLoading(true); 
         cleanErrors();
 
         if (!checkValidMail(username) || !checkValidPassword(password)) {

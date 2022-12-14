@@ -73,6 +73,8 @@ Los administradores tienen la posibilidad de ver 3 metricas distintas acerca de 
 
 1. Total de usuarios que ingresaron a la plataforma durante las ultimsa 24 horas (segregado por tipo de login (federado vs. Email y contraseña))
 
+![](./readmeImages/Screenshot%20from%202022-12-12%2015-54-09.png)
+
 2. Total de usuarios activos durante las ultimas 24 horas, segregado por cada hora y por tipo de usuario (driver vs rider)
 
 3. Total de nuevos usuarios durante las ultimas 24 horas (segregado por metodo de registro (federado vs. email y contraseña))

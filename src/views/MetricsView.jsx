@@ -36,7 +36,7 @@ export default function MetricsView(props){
         let trip_metrics = await getTripData(context);
         let transaction_metrics = await getTransactionData(context);
         
-
+        
         const sumed_logins = {
             "Federated": 0,
             "Email and password": 0
@@ -46,18 +46,18 @@ export default function MetricsView(props){
             "Federated": 0,
             "Email and password": 0    
         };
-
+        
         creation_data.map(value => {
             sumed_signups.Federated += value.value.Federated;
             sumed_signups["Email and password"] += value.value.Email;
         })
-
+        
         login_data.map(value => {
             
             sumed_logins.Federated += value.value.Federated;
             sumed_logins["Email and password"] += value.value.Email;
         })
-
+        console.log("Mapped all");
         setNewUsers(
             [
                 {

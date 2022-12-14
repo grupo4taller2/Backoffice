@@ -1,4 +1,5 @@
 import * as Firestore from "firebase/firestore";
+import { getMockedData, MOCKING } from "../config/demoData";
 import { db } from "../config/firebase";
 
 const hours = 60 * 60 * 1000;
@@ -27,7 +28,7 @@ export async function getLast24HoursFrom(collectionName, base){
         return {value: value, time: time};
     });
     
-    return values; 
+    return MOCKING ? getMockedData(collectionName) : values; 
     
     
 }

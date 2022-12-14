@@ -1,4 +1,5 @@
 import axios from "axios";
+import { MOCKING, transactionMockData } from "../config/demoData";
 import { getHeader } from "./net";
 
 export async function getTransactionData(context){
@@ -8,7 +9,7 @@ export async function getTransactionData(context){
     const data = await (await axios.get("https://g4-fiuber.herokuapp.com/api/v1/payments/transactions/24", token)).data;
 
     return {
-        withdrawsVsPayments: paymentsVsWithdraws(data),
+        withdrawsVsPayments: MOCKING ? transactionMockData : paymentsVsWithdraws(data),
 
     }
 

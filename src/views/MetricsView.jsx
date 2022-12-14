@@ -169,11 +169,11 @@ export default function MetricsView(props){
     }
 
     const trip3Layout = {
-        legend: true,
+        legend: false,
         labels: {
             x: "Trips",
             xKey: "trips",
-            y: "Users"
+            y: "Riders"
         },
         lines: [
             {
@@ -208,7 +208,7 @@ export default function MetricsView(props){
                                     third={newUsers} layout3={user1Layout} type3="Pie"/>}
 
                 {retrieved && !mainError && activeMetrics === 2 && <TwoMetrics title3="Trips per distance range" 
-                                title2="User trips frequency"
+                                title2="Riders trips frequency"
                                 title1="Drivers trips frequency"
                                 third={tripsLength}  layout3={trip1Layout} type3="Bar" 
                                 second={userFreq} layout2={trip3Layout} type2="Bar"

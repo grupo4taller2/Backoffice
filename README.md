@@ -73,11 +73,11 @@ Los administradores tienen la posibilidad de ver 3 metricas distintas acerca de 
 
 1. Total de usuarios que ingresaron a la plataforma durante las ultimsa 24 horas (segregado por tipo de login (federado vs. Email y contraseña))
 
-![](./readmeImages/Screenshot%20from%202022-12-12%2015-54-09.png)
-
 2. Total de usuarios activos durante las ultimas 24 horas, segregado por cada hora y por tipo de usuario (driver vs rider)
 
 3. Total de nuevos usuarios durante las ultimas 24 horas (segregado por metodo de registro (federado vs. email y contraseña))
+
+![](./readmeImages/Screenshot%20from%202022-12-14%2014-56-20.png)
 
 ---
 
@@ -91,6 +91,7 @@ Asimismo, los administradores tienen disponibles 3 metricas diferentes para los 
 
 3. Cantidad de viajes segun su rango de distancia (menos de 5km, menos de 10km y mas de 10km) durante las ultimas 24 horas.
 
+![](./readmeImages/Screenshot%20from%202022-12-14%2014-56-25.png)
 ---
 
 ### Metricas de transacciones
@@ -98,6 +99,8 @@ Asimismo, los administradores tienen disponibles 3 metricas diferentes para los 
 Finalmente, los administradores tienen disponible la siguiente metrica de transacciones
 
 1. Retiros realizados durante las ultimas 24 horas de la plataforma contra los pagos hechos durante esa misma ventana de tiempo.
+
+![](./readmeImages/Screenshot%20from%202022-12-14%2014-56-31.png)
 
 ---
 

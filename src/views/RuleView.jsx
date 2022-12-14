@@ -111,7 +111,7 @@ export default function Rules(props){
 
             const pricing = await try_rules(trial, context);
 
-            setMessage("Total pricing: " + pricing.price);
+            setMessage("Total pricing: " + pricing.price + " ETH");
             setPopUp(true);
 
         }catch{

@@ -1,5 +1,5 @@
 import "../style/login.css"
-import { Badge, Card, Form, FormGroup, Input, Label, Modal } from "reactstrap"
+import { Badge, Button, Card, Form, FormGroup, Input, Label, Modal } from "reactstrap"
 import StatusButton from "../components/StatusButton";
 import React from "react";
 import LabeledInput from "../components/LabeledInput";
@@ -95,7 +95,7 @@ export default function LoginView(props){
                                     invalid={failedInput}/>
                 </FormGroup>
             </Form>
-            <Badge className="GoogleBadge" color="primary" onClick={tryLoginGoogle}>Sign in with google</Badge>
+            <Button className="GoogleBadge" color="primary" onClick={tryLoginGoogle}>Sign in with google</Button>
             <StatusButton className="LoginBtn" color="primary" text="Login" loading={loading} 
                             loadingText="Login in" onPress={tryLogin}/>
 

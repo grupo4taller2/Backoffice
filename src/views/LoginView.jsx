@@ -95,7 +95,7 @@ export default function LoginView(props){
                                     invalid={failedInput}/>
                 </FormGroup>
             </Form>
-            <Badge color="primary" onClick={tryLoginGoogle}>Sign in with google</Badge>
+            <Badge className="GoogleBadge" color="primary" onClick={tryLoginGoogle}>Sign in with google</Badge>
             <StatusButton className="LoginBtn" color="primary" text="Login" loading={loading} 
                             loadingText="Login in" onPress={tryLogin}/>
 
